@@ -17,6 +17,7 @@ export const initialBaseFilterState: BaseFilterState = {
   ageRanges: [],
   weather: [],
   amenities: [],
+  accessibility: [],
   searchQuery: '',
 }
 
@@ -24,8 +25,8 @@ export const initialHikeFilterState: HikeFilterState = {
   ...initialBaseFilterState,
   difficulty: [],
   surface: [],
-  strollerFriendly: null,
   isLoop: null,
+  shadeCoverage: null,
 }
 
 export const initialEatFilterState: EatFilterState = {
@@ -37,11 +38,13 @@ export const initialEatFilterState: EatFilterState = {
 export const initialPlayFilterState: PlayFilterState = {
   ...initialBaseFilterState,
   hasFencedArea: null,
+  setting: null,
 }
 
 export const initialExploreFilterState: ExploreFilterState = {
   ...initialBaseFilterState,
   admissionRequired: null,
+  setting: null,
 }
 
 export const initialShopFilterState: ShopFilterState = {
@@ -95,6 +98,14 @@ function filterReducer(
         : [...state.amenities, action.payload]
       return { ...state, amenities }
     }
+    case 'SET_ACCESSIBILITY':
+      return { ...state, accessibility: action.payload }
+    case 'TOGGLE_ACCESSIBILITY': {
+      const accessibility = state.accessibility.includes(action.payload)
+        ? state.accessibility.filter((a) => a !== action.payload)
+        : [...state.accessibility, action.payload]
+      return { ...state, accessibility }
+    }
     case 'SET_SEARCH_QUERY':
       return { ...state, searchQuery: action.payload }
     case 'SET_DIFFICULTY':
@@ -115,10 +126,10 @@ function filterReducer(
         : [...hikeState.surface, action.payload]
       return { ...state, surface }
     }
-    case 'SET_STROLLER_FRIENDLY':
-      return { ...state, strollerFriendly: action.payload }
     case 'SET_IS_LOOP':
       return { ...state, isLoop: action.payload }
+    case 'SET_SHADE_COVERAGE':
+      return { ...state, shadeCoverage: action.payload }
     case 'SET_MEAL_TYPES':
       return { ...state, mealTypes: action.payload }
     case 'TOGGLE_MEAL_TYPE': {
@@ -139,6 +150,8 @@ function filterReducer(
     }
     case 'SET_FENCED_AREA':
       return { ...state, hasFencedArea: action.payload }
+    case 'SET_SETTING':
+      return { ...state, setting: action.payload }
     case 'SET_ADMISSION_REQUIRED':
       return { ...state, admissionRequired: action.payload }
     case 'SET_KIDS_FOCUSED':
@@ -178,6 +191,7 @@ export function useFilters(category: Category) {
     if (filters.ageRanges.length > 0) return true
     if (filters.weather.length > 0) return true
     if (filters.amenities.length > 0) return true
+    if (filters.accessibility.length > 0) return true
     if (filters.searchQuery) return true
 
     // Check category-specific filters
@@ -189,11 +203,12 @@ export function useFilters(category: Category) {
 
     if ('difficulty' in filters && hikeFilters.difficulty?.length > 0) return true
     if ('surface' in filters && hikeFilters.surface?.length > 0) return true
-    if ('strollerFriendly' in filters && hikeFilters.strollerFriendly !== null) return true
     if ('isLoop' in filters && hikeFilters.isLoop !== null) return true
+    if ('shadeCoverage' in filters && hikeFilters.shadeCoverage !== null) return true
     if ('mealTypes' in filters && eatFilters.mealTypes?.length > 0) return true
     if ('features' in filters && eatFilters.features?.length > 0) return true
     if ('hasFencedArea' in filters && playFilters.hasFencedArea !== null) return true
+    if ('setting' in filters && (playFilters.setting !== null || exploreFilters.setting !== null)) return true
     if ('admissionRequired' in filters && exploreFilters.admissionRequired !== null) return true
     if ('kidsFocused' in filters && shopFilters.kidsFocused !== null) return true
 

@@ -77,7 +77,8 @@
     "kidFriendlinessScore": 5,
     "ageRanges": ["baby", "toddler", "preschool", "elementary"],
     "weather": ["sunny", "rainy", "snowy", "cold"],
-    "amenities": ["restrooms", "parking", "stroller-accessible"],
+    "amenities": ["restrooms", "parking"],
+    "accessibility": ["stroller"],
     "images": [],
     "tips": [
       "Indoor playground keeps kids entertained",
@@ -91,7 +92,8 @@
     "mealTypes": ["breakfast", "lunch", "dinner"],
     "features": ["kids-menu", "highchairs", "quick-service", "entertainment"],
     "averageMealTime": "30 minutes",
-    "noiseLevel": "loud"
+    "noiseLevel": "loud",
+    "changingTables": true
   },
   {
     "id": "eat-black-barts",
@@ -139,7 +141,8 @@
     "kidFriendlinessScore": 4,
     "ageRanges": ["toddler", "preschool", "elementary", "tween"],
     "weather": ["sunny", "rainy", "snowy", "cold"],
-    "amenities": ["restrooms", "parking", "stroller-accessible"],
+    "amenities": ["restrooms", "parking"],
+    "accessibility": ["stroller"],
     "images": [],
     "tips": [
       "The pizza is a crowd-pleaser for kids",
@@ -153,7 +156,8 @@
     "mealTypes": ["lunch", "dinner"],
     "features": ["kids-menu", "highchairs", "reservations"],
     "averageMealTime": "60 minutes",
-    "noiseLevel": "moderate"
+    "noiseLevel": "moderate",
+    "changingTables": true
   },
   {
     "id": "eat-crown-railroad",
@@ -169,7 +173,7 @@
     "kidFriendlinessScore": 5,
     "ageRanges": ["baby", "toddler", "preschool", "elementary"],
     "weather": ["sunny", "rainy", "snowy", "cold"],
-    "amenities": ["restrooms", "parking", "highchairs"],
+    "amenities": ["restrooms", "parking"],
     "images": [],
     "tips": [
       "Sit where you can see the model train",

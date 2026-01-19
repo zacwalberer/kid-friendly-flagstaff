@@ -14,7 +14,8 @@
     "kidFriendlinessScore": 5,
     "ageRanges": ["baby", "toddler", "preschool", "elementary", "tween"],
     "weather": ["sunny", "rainy", "snowy", "cold"],
-    "amenities": ["stroller-accessible"],
+    "amenities": [],
+    "accessibility": ["stroller"],
     "images": [],
     "isTopPick": true,
     "topPickReason": "The best children's bookstore in Flagstaff with friendly staff and regular kids' events.",
@@ -28,7 +29,8 @@
     "lastUpdated": "2024-01-15",
     "shopType": "books",
     "hasPlayArea": false,
-    "kidsFocused": true
+    "kidsFocused": true,
+    "features": []
   },
   {
     "id": "shop-bookmans",
@@ -45,7 +47,8 @@
     "kidFriendlinessScore": 5,
     "ageRanges": ["toddler", "preschool", "elementary", "tween"],
     "weather": ["sunny", "rainy", "snowy", "cold"],
-    "amenities": ["restrooms", "parking", "stroller-accessible"],
+    "amenities": ["restrooms", "parking"],
+    "accessibility": ["stroller"],
     "images": [],
     "tips": [
       "Bring items to trade for store credit",
@@ -57,7 +60,8 @@
     "lastUpdated": "2024-01-15",
     "shopType": "books",
     "hasPlayArea": false,
-    "kidsFocused": false
+    "kidsFocused": false,
+    "features": []
   },
   {
     "id": "shop-babies-2-kids",
@@ -73,7 +77,8 @@
     "kidFriendlinessScore": 4,
     "ageRanges": ["baby", "toddler", "preschool", "elementary"],
     "weather": ["sunny", "rainy", "snowy", "cold"],
-    "amenities": ["parking", "stroller-accessible"],
+    "amenities": ["parking"],
+    "accessibility": ["stroller"],
     "images": [],
     "tips": [
       "Inventory changes frequently - visit often",
@@ -85,6 +90,7 @@
     "lastUpdated": "2024-01-15",
     "shopType": "resale",
     "hasPlayArea": false,
-    "kidsFocused": true
+    "kidsFocused": true,
+    "features": []
   }
 ]

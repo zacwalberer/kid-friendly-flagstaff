@@ -4,11 +4,16 @@ export type Weather = 'sunny' | 'rainy' | 'snowy' | 'cold'
 
 export type Category = 'play' | 'hike' | 'eat' | 'explore' | 'shop'
 
+export type Accessibility = 'wheelchair' | 'stroller'
+
+export type Setting = 'indoor' | 'outdoor' | 'both'
+
+export type ShadeCoverage = 'none' | 'partial' | 'full'
+
 export type Amenity =
   | 'restrooms'
   | 'shade'
   | 'parking'
-  | 'stroller-accessible'
   | 'dog-friendly'
   | 'water-fountain'
   | 'picnic-area'
@@ -44,6 +49,7 @@ export interface BaseActivity {
   ageRanges: AgeRange[]
   weather: Weather[]
   amenities: Amenity[]
+  accessibility?: Accessibility[]
   images: string[]
   isTopPick?: boolean
   topPickReason?: string
@@ -59,8 +65,10 @@ export interface BaseActivity {
 export interface PlayActivity extends BaseActivity {
   category: 'play'
   playType: 'playground' | 'indoor-play' | 'sports' | 'splash-pad' | 'arcade'
+  setting: Setting
   hasFencedArea?: boolean
   ageGroupSections?: string[]
+  features?: string[]
 }
 
 export interface HikeActivity extends BaseActivity {
@@ -69,10 +77,12 @@ export interface HikeActivity extends BaseActivity {
   distance: string
   elevationGain?: string
   surface: Surface
-  isStrollerFriendly: boolean
   isLoop: boolean
   trailheadParking?: string
   bestSeason?: string[]
+  features?: string[]
+  shadeCoverage?: ShadeCoverage
+  duration?: string
 }
 
 export interface EatActivity extends BaseActivity {
@@ -82,14 +92,16 @@ export interface EatActivity extends BaseActivity {
   features: EatFeature[]
   averageMealTime?: string
   noiseLevel?: 'quiet' | 'moderate' | 'loud'
+  changingTables?: boolean
 }
 
 export interface ExploreActivity extends BaseActivity {
   category: 'explore'
   exploreType: 'museum' | 'nature' | 'attraction' | 'historic-site' | 'adventure'
-  duration: string
+  setting: Setting
   admissionRequired: boolean
   advanceBooking?: boolean
+  features?: string[]
 }
 
 export interface ShopActivity extends BaseActivity {
@@ -97,6 +109,7 @@ export interface ShopActivity extends BaseActivity {
   shopType: 'toys' | 'books' | 'clothing' | 'resale' | 'general'
   hasPlayArea?: boolean
   kidsFocused: boolean
+  features?: string[]
 }
 
 // Union type for all activities

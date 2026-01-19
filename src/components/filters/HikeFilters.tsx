@@ -4,31 +4,33 @@ import { cn } from '@/lib/utils'
 import {
   DIFFICULTY_LABELS,
   SURFACE_LABELS,
+  SHADE_COVERAGE_LABELS,
   ALL_DIFFICULTIES,
   ALL_SURFACES,
+  ALL_SHADE_COVERAGES,
 } from '@/utils/constants'
-import type { Difficulty, Surface } from '@/types'
+import type { Difficulty, Surface, ShadeCoverage } from '@/types'
 
 interface HikeFiltersProps {
   selectedDifficulty: Difficulty[]
   selectedSurface: Surface[]
-  strollerFriendly: boolean | null
   isLoop: boolean | null
+  shadeCoverage: ShadeCoverage | null
   onToggleDifficulty: (difficulty: Difficulty) => void
   onToggleSurface: (surface: Surface) => void
-  onSetStrollerFriendly: (value: boolean | null) => void
   onSetIsLoop: (value: boolean | null) => void
+  onSetShadeCoverage: (value: ShadeCoverage | null) => void
 }
 
 export function HikeFilters({
   selectedDifficulty,
   selectedSurface,
-  strollerFriendly,
   isLoop,
+  shadeCoverage,
   onToggleDifficulty,
   onToggleSurface,
-  onSetStrollerFriendly,
   onSetIsLoop,
+  onSetShadeCoverage,
 }: HikeFiltersProps) {
   return (
     <div className="space-y-4">
@@ -76,31 +78,6 @@ export function HikeFilters({
         </div>
       </div>
 
-      {/* Stroller Friendly */}
-      <div className="space-y-2">
-        <label className="text-sm font-medium">Stroller Friendly</label>
-        <div className="flex gap-2">
-          <button
-            onClick={() => onSetStrollerFriendly(strollerFriendly === true ? null : true)}
-            className={cn(
-              'filter-pill transition-colors',
-              strollerFriendly === true ? 'filter-pill-active' : 'filter-pill-inactive'
-            )}
-          >
-            Yes
-          </button>
-          <button
-            onClick={() => onSetStrollerFriendly(strollerFriendly === false ? null : false)}
-            className={cn(
-              'filter-pill transition-colors',
-              strollerFriendly === false ? 'filter-pill-active' : 'filter-pill-inactive'
-            )}
-          >
-            No
-          </button>
-        </div>
-      </div>
-
       {/* Loop Trail */}
       <div className="space-y-2">
         <label className="text-sm font-medium">Trail Type</label>
@@ -123,6 +100,28 @@ export function HikeFilters({
           >
             Out & Back
           </button>
+        </div>
+      </div>
+
+      {/* Shade Coverage */}
+      <div className="space-y-2">
+        <label className="text-sm font-medium">Shade Coverage</label>
+        <div className="flex flex-wrap gap-2">
+          {ALL_SHADE_COVERAGES.map((shade) => {
+            const isSelected = shadeCoverage === shade
+            return (
+              <button
+                key={shade}
+                onClick={() => onSetShadeCoverage(isSelected ? null : shade)}
+                className={cn(
+                  'filter-pill transition-colors',
+                  isSelected ? 'filter-pill-active' : 'filter-pill-inactive'
+                )}
+              >
+                {SHADE_COVERAGE_LABELS[shade]}
+              </button>
+            )
+          })}
         </div>
       </div>
     </div>

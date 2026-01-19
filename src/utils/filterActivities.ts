@@ -49,6 +49,15 @@ function matchesBaseFilters(activity: Activity, filters: BaseFilterState): boole
     }
   }
 
+  // Accessibility filter - activity must have ALL selected accessibility options
+  if (filters.accessibility.length > 0) {
+    const activityAccessibility = activity.accessibility || []
+    const hasAllAccessibility = filters.accessibility.every((a) => activityAccessibility.includes(a))
+    if (!hasAllAccessibility) {
+      return false
+    }
+  }
+
   return true
 }
 
@@ -76,13 +85,13 @@ export function filterHikeActivities(
       return false
     }
 
-    // Stroller friendly filter
-    if (filters.strollerFriendly !== null && activity.isStrollerFriendly !== filters.strollerFriendly) {
+    // Loop filter
+    if (filters.isLoop !== null && activity.isLoop !== filters.isLoop) {
       return false
     }
 
-    // Loop filter
-    if (filters.isLoop !== null && activity.isLoop !== filters.isLoop) {
+    // Shade coverage filter
+    if (filters.shadeCoverage !== null && activity.shadeCoverage !== filters.shadeCoverage) {
       return false
     }
 
@@ -125,6 +134,15 @@ export function filterPlayActivities(
       return false
     }
 
+    // Setting filter
+    if (filters.setting !== null) {
+      if (filters.setting === 'both') {
+        if (activity.setting !== 'both') return false
+      } else {
+        if (activity.setting !== filters.setting && activity.setting !== 'both') return false
+      }
+    }
+
     return true
   })
 }
@@ -142,6 +160,15 @@ export function filterExploreActivities(
       activity.admissionRequired !== filters.admissionRequired
     ) {
       return false
+    }
+
+    // Setting filter
+    if (filters.setting !== null) {
+      if (filters.setting === 'both') {
+        if (activity.setting !== 'both') return false
+      } else {
+        if (activity.setting !== filters.setting && activity.setting !== 'both') return false
+      }
     }
 
     return true

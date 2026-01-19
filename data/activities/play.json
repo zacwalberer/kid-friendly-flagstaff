@@ -14,7 +14,8 @@
     "kidFriendlinessScore": 5,
     "ageRanges": ["toddler", "preschool", "elementary", "tween"],
     "weather": ["sunny", "cold"],
-    "amenities": ["restrooms", "shade", "parking", "stroller-accessible", "picnic-area", "water-fountain"],
+    "amenities": ["restrooms", "shade", "parking", "picnic-area", "water-fountain"],
+    "accessibility": ["stroller"],
     "images": [],
     "isTopPick": true,
     "topPickReason": "The best all-around playground in Flagstaff with equipment for all ages and plenty of shade.",
@@ -26,8 +27,10 @@
     "coordinates": { "lat": 35.2106, "lng": -111.6348 },
     "lastUpdated": "2024-01-15",
     "playType": "playground",
+    "setting": "outdoor",
     "hasFencedArea": false,
-    "ageGroupSections": ["toddler section", "big kid section"]
+    "ageGroupSections": ["toddler section", "big kid section"],
+    "features": ["swings", "slides", "climbing structures", "sand play area"]
   },
   {
     "id": "play-bushmaster-park",
@@ -52,7 +55,9 @@
     "coordinates": { "lat": 35.2289, "lng": -111.6125 },
     "lastUpdated": "2024-01-15",
     "playType": "playground",
-    "hasFencedArea": false
+    "setting": "outdoor",
+    "hasFencedArea": false,
+    "features": ["swings", "slides", "climbing equipment"]
   },
   {
     "id": "play-foxglenn-park",
@@ -67,7 +72,8 @@
     "kidFriendlinessScore": 4,
     "ageRanges": ["toddler", "preschool", "elementary"],
     "weather": ["sunny", "cold"],
-    "amenities": ["parking", "shade", "picnic-area", "stroller-accessible"],
+    "amenities": ["parking", "shade", "picnic-area"],
+    "accessibility": ["stroller"],
     "images": [],
     "tips": [
       "Great for flying kites on windy days",
@@ -77,7 +83,9 @@
     "coordinates": { "lat": 35.1891, "lng": -111.5849 },
     "lastUpdated": "2024-01-15",
     "playType": "playground",
-    "hasFencedArea": false
+    "setting": "outdoor",
+    "hasFencedArea": false,
+    "features": ["swings", "slides", "climbing structures", "open fields"]
   },
   {
     "id": "play-mcpherson-park",
@@ -92,7 +100,8 @@
     "kidFriendlinessScore": 4,
     "ageRanges": ["baby", "toddler", "preschool"],
     "weather": ["sunny", "cold"],
-    "amenities": ["shade", "stroller-accessible", "picnic-area"],
+    "amenities": ["shade", "picnic-area"],
+    "accessibility": ["stroller"],
     "images": [],
     "tips": [
       "Walk to downtown restaurants and shops after playing",
@@ -102,7 +111,9 @@
     "coordinates": { "lat": 35.1996, "lng": -111.6492 },
     "lastUpdated": "2024-01-15",
     "playType": "playground",
-    "hasFencedArea": false
+    "setting": "outdoor",
+    "hasFencedArea": false,
+    "features": ["swings", "slides", "climbing equipment"]
   },
   {
     "id": "play-chick-fil-a-playground",
@@ -119,7 +130,8 @@
     "kidFriendlinessScore": 5,
     "ageRanges": ["toddler", "preschool", "elementary"],
     "weather": ["rainy", "snowy", "cold"],
-    "amenities": ["restrooms", "parking", "stroller-accessible"],
+    "amenities": ["restrooms", "parking"],
+    "accessibility": ["stroller"],
     "images": [],
     "isTopPick": false,
     "tips": [
@@ -130,7 +142,9 @@
     "coordinates": { "lat": 35.1827, "lng": -111.6565 },
     "lastUpdated": "2024-01-15",
     "playType": "indoor-play",
-    "hasFencedArea": true
+    "setting": "indoor",
+    "hasFencedArea": true,
+    "features": ["climbing structure", "slides", "enclosed play area"]
   },
   {
     "id": "play-arroyo-park",
@@ -155,6 +169,8 @@
     "coordinates": { "lat": 35.2056, "lng": -111.6234 },
     "lastUpdated": "2024-01-15",
     "playType": "playground",
-    "hasFencedArea": false
+    "setting": "outdoor",
+    "hasFencedArea": false,
+    "features": ["climbing boulders", "slides", "swings", "nature play"]
   }
 ]

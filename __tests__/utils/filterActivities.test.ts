@@ -18,12 +18,14 @@ const mockActivity: PlayActivity = {
   images: [],
   lastUpdated: '2024-01-01',
   playType: 'playground',
+  setting: 'outdoor',
 }
 
 const emptyFilters: BaseFilterState = {
   ageRanges: [],
   weather: [],
   amenities: [],
+  accessibility: [],
   searchQuery: '',
 }
 

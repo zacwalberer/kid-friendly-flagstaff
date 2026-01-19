@@ -35,6 +35,10 @@ import {
   SURFACE_LABELS,
   MEAL_TYPE_LABELS,
   EAT_FEATURE_LABELS,
+  ACCESSIBILITY_LABELS,
+  ACCESSIBILITY_ICONS,
+  SETTING_LABELS,
+  SHADE_COVERAGE_LABELS,
   getCategoryInfo,
 } from '@/utils/constants'
 import { formatDistance, formatElevation, formatDuration } from '@/utils/formatDistance'
@@ -197,15 +201,35 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                   </div>
                   <Separator className="bg-[var(--cream-300)]" />
                   <div className="flex flex-wrap gap-4">
-                    <Badge variant={activity.isStrollerFriendly ? 'default' : 'secondary'} className={activity.isStrollerFriendly ? 'bg-[var(--forest-500)] text-white' : 'bg-[var(--cream-200)] text-[var(--forest-600)]'}>
-                      {activity.isStrollerFriendly
-                        ? 'Stroller Friendly'
-                        : 'Not Stroller Friendly'}
-                    </Badge>
                     <Badge variant={activity.isLoop ? 'default' : 'secondary'} className={activity.isLoop ? 'bg-[var(--forest-500)] text-white' : 'bg-[var(--cream-200)] text-[var(--forest-600)]'}>
                       {activity.isLoop ? 'Loop Trail' : 'Out and Back'}
                     </Badge>
+                    {activity.shadeCoverage && (
+                      <Badge variant="secondary" className="bg-[var(--cream-200)] text-[var(--forest-600)]">
+                        {SHADE_COVERAGE_LABELS[activity.shadeCoverage]}
+                      </Badge>
+                    )}
+                    {activity.duration && (
+                      <Badge variant="secondary" className="bg-[var(--cream-200)] text-[var(--forest-600)]">
+                        {formatDuration(activity.duration)}
+                      </Badge>
+                    )}
                   </div>
+                  {activity.features && activity.features.length > 0 && (
+                    <>
+                      <Separator className="bg-[var(--cream-300)]" />
+                      <div>
+                        <p className="text-sm text-[var(--forest-500)] mb-2">Features</p>
+                        <div className="flex flex-wrap gap-2">
+                          {activity.features.map((feature) => (
+                            <Badge key={feature} variant="outline" className="border-[var(--cream-300)] text-[var(--forest-600)]">
+                              {feature}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </CardContent>
               </Card>
             </motion.div>
@@ -243,6 +267,11 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                           {EAT_FEATURE_LABELS[feature]}
                         </Badge>
                       ))}
+                      {activity.changingTables && (
+                        <Badge variant="secondary" className="bg-[var(--forest-100)] text-[var(--forest-700)]">
+                          Changing Tables
+                        </Badge>
+                      )}
                     </div>
                   </div>
                 </CardContent>
@@ -262,8 +291,8 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <p className="text-sm text-[var(--forest-500)]">Duration</p>
-                      <p className="font-display font-medium text-[var(--forest-800)]">{formatDuration(activity.duration)}</p>
+                      <p className="text-sm text-[var(--forest-500)]">Setting</p>
+                      <p className="font-display font-medium text-[var(--forest-800)]">{SETTING_LABELS[activity.setting]}</p>
                     </div>
                     <div>
                       <p className="text-sm text-[var(--forest-500)]">Admission</p>
@@ -277,6 +306,90 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                       Advance Booking Recommended
                     </Badge>
                   )}
+                  {activity.features && activity.features.length > 0 && (
+                    <>
+                      <Separator className="bg-[var(--cream-300)]" />
+                      <div>
+                        <p className="text-sm text-[var(--forest-500)] mb-2">Features</p>
+                        <div className="flex flex-wrap gap-2">
+                          {activity.features.map((feature) => (
+                            <Badge key={feature} variant="outline" className="border-[var(--cream-300)] text-[var(--forest-600)]">
+                              {feature}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
+          {ActivityTypes.isPlayActivity(activity) && (
+            <motion.div variants={staggerItem}>
+              <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
+                <CardHeader>
+                  <CardTitle className="font-display text-[var(--forest-800)] flex items-center gap-2">
+                    <Tent className="h-5 w-5 text-[var(--category-play)]" />
+                    Play Info
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-sm text-[var(--forest-500)]">Setting</p>
+                      <p className="font-display font-medium text-[var(--forest-800)]">{SETTING_LABELS[activity.setting]}</p>
+                    </div>
+                    {activity.hasFencedArea !== undefined && (
+                      <div>
+                        <p className="text-sm text-[var(--forest-500)]">Fenced Area</p>
+                        <p className="font-display font-medium text-[var(--forest-800)]">
+                          {activity.hasFencedArea ? 'Yes' : 'No'}
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  {activity.features && activity.features.length > 0 && (
+                    <>
+                      <Separator className="bg-[var(--cream-300)]" />
+                      <div>
+                        <p className="text-sm text-[var(--forest-500)] mb-2">Features</p>
+                        <div className="flex flex-wrap gap-2">
+                          {activity.features.map((feature) => (
+                            <Badge key={feature} variant="outline" className="border-[var(--cream-300)] text-[var(--forest-600)]">
+                              {feature}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
+
+          {ActivityTypes.isShopActivity(activity) && activity.features && activity.features.length > 0 && (
+            <motion.div variants={staggerItem}>
+              <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
+                <CardHeader>
+                  <CardTitle className="font-display text-[var(--forest-800)] flex items-center gap-2">
+                    <ShoppingBag className="h-5 w-5 text-[var(--category-shop)]" />
+                    Shop Info
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <p className="text-sm text-[var(--forest-500)] mb-2">Features</p>
+                    <div className="flex flex-wrap gap-2">
+                      {activity.features.map((feature) => (
+                        <Badge key={feature} variant="outline" className="border-[var(--cream-300)] text-[var(--forest-600)]">
+                          {feature}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>
@@ -442,6 +555,27 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
               </CardContent>
             </Card>
           </motion.div>
+
+          {/* Accessibility */}
+          {activity.accessibility && activity.accessibility.length > 0 && (
+            <motion.div variants={staggerItem}>
+              <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
+                <CardHeader>
+                  <CardTitle className="font-display text-[var(--forest-800)]">Accessibility</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    {activity.accessibility.map((a) => (
+                      <div key={a} className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-[var(--forest-100)]">
+                        <span className="text-lg">{ACCESSIBILITY_ICONS[a]}</span>
+                        <span className="text-sm text-[var(--forest-700)]">{ACCESSIBILITY_LABELS[a]}</span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
         </motion.div>
       </div>
     </motion.div>

@@ -25,7 +25,8 @@
     "coordinates": { "lat": 35.3423, "lng": -111.8356 },
     "lastUpdated": "2024-01-15",
     "exploreType": "nature",
-    "duration": "1-2 hours",
+    "setting": "outdoor",
+    "features": [],
     "admissionRequired": false,
     "advanceBooking": false
   },
@@ -53,7 +54,8 @@
     "coordinates": { "lat": 35.4123, "lng": -111.8456 },
     "lastUpdated": "2024-01-15",
     "exploreType": "nature",
-    "duration": "1.5 hours",
+    "setting": "outdoor",
+    "features": [],
     "admissionRequired": false,
     "advanceBooking": false
   },
@@ -72,7 +74,8 @@
     "kidFriendlinessScore": 4,
     "ageRanges": ["preschool", "elementary", "tween"],
     "weather": ["sunny", "cold"],
-    "amenities": ["restrooms", "parking", "stroller-accessible"],
+    "amenities": ["restrooms", "parking"],
+    "accessibility": ["stroller"],
     "images": [],
     "tips": [
       "Combined pass available with Wupatki",
@@ -83,7 +86,8 @@
     "coordinates": { "lat": 35.3712, "lng": -111.5008 },
     "lastUpdated": "2024-01-15",
     "exploreType": "nature",
-    "duration": "2-3 hours",
+    "setting": "both",
+    "features": [],
     "admissionRequired": true,
     "advanceBooking": false
   },
@@ -113,7 +117,8 @@
     "coordinates": { "lat": 35.1710, "lng": -111.5073 },
     "lastUpdated": "2024-01-15",
     "exploreType": "historic-site",
-    "duration": "2-3 hours",
+    "setting": "outdoor",
+    "features": [],
     "admissionRequired": true,
     "advanceBooking": false
   },
@@ -143,7 +148,8 @@
     "coordinates": { "lat": 35.1456, "lng": -111.6789 },
     "lastUpdated": "2024-01-15",
     "exploreType": "adventure",
-    "duration": "2-3 hours",
+    "setting": "outdoor",
+    "features": [],
     "admissionRequired": true,
     "advanceBooking": true
   },
@@ -162,7 +168,8 @@
     "kidFriendlinessScore": 4,
     "ageRanges": ["preschool", "elementary", "tween"],
     "weather": ["sunny", "cold"],
-    "amenities": ["restrooms", "parking", "stroller-accessible"],
+    "amenities": ["restrooms", "parking"],
+    "accessibility": ["stroller"],
     "images": [],
     "tips": [
       "Evening programs offer telescope viewing",
@@ -173,7 +180,8 @@
     "coordinates": { "lat": 35.2027, "lng": -111.6647 },
     "lastUpdated": "2024-01-15",
     "exploreType": "museum",
-    "duration": "2-4 hours",
+    "setting": "both",
+    "features": [],
     "admissionRequired": true,
     "advanceBooking": true
   }

@@ -1,4 +1,4 @@
-import type { AgeRange, Weather, Amenity, Category, Difficulty, Surface, MealType, EatFeature, CategoryInfo } from '@/types'
+import type { AgeRange, Weather, Amenity, Category, Difficulty, Surface, MealType, EatFeature, CategoryInfo, Accessibility, Setting, ShadeCoverage } from '@/types'
 
 export const AGE_LABELS: Record<AgeRange, string> = {
   baby: '0-1 years',
@@ -34,7 +34,6 @@ export const AMENITY_LABELS: Record<Amenity, string> = {
   restrooms: 'Restrooms',
   shade: 'Shaded Area',
   parking: 'Parking',
-  'stroller-accessible': 'Stroller Accessible',
   'dog-friendly': 'Dog Friendly',
   'water-fountain': 'Water Fountain',
   'picnic-area': 'Picnic Area',
@@ -44,10 +43,37 @@ export const AMENITY_ICONS: Record<Amenity, string> = {
   restrooms: '🚻',
   shade: '🌳',
   parking: '🅿️',
-  'stroller-accessible': '👶',
   'dog-friendly': '🐕',
   'water-fountain': '💧',
   'picnic-area': '🧺',
+}
+
+export const ACCESSIBILITY_LABELS: Record<Accessibility, string> = {
+  wheelchair: 'Wheelchair Accessible',
+  stroller: 'Stroller Friendly',
+}
+
+export const ACCESSIBILITY_ICONS: Record<Accessibility, string> = {
+  wheelchair: '♿',
+  stroller: '👶',
+}
+
+export const SETTING_LABELS: Record<Setting, string> = {
+  indoor: 'Indoor',
+  outdoor: 'Outdoor',
+  both: 'Indoor & Outdoor',
+}
+
+export const SETTING_ICONS: Record<Setting, string> = {
+  indoor: '🏠',
+  outdoor: '🌲',
+  both: '🏕️',
+}
+
+export const SHADE_COVERAGE_LABELS: Record<ShadeCoverage, string> = {
+  none: 'No Shade',
+  partial: 'Partial Shade',
+  full: 'Full Shade',
 }
 
 export const DIFFICULTY_LABELS: Record<Difficulty, string> = {
@@ -150,11 +176,13 @@ export const ALL_AMENITIES: Amenity[] = [
   'restrooms',
   'shade',
   'parking',
-  'stroller-accessible',
   'dog-friendly',
   'water-fountain',
   'picnic-area',
 ]
+export const ALL_ACCESSIBILITY: Accessibility[] = ['wheelchair', 'stroller']
+export const ALL_SETTINGS: Setting[] = ['indoor', 'outdoor', 'both']
+export const ALL_SHADE_COVERAGES: ShadeCoverage[] = ['none', 'partial', 'full']
 export const ALL_DIFFICULTIES: Difficulty[] = ['easy', 'moderate', 'hard']
 export const ALL_SURFACES: Surface[] = ['paved', 'gravel', 'dirt', 'mixed']
 export const ALL_MEAL_TYPES: MealType[] = ['breakfast', 'lunch', 'dinner', 'brunch']
