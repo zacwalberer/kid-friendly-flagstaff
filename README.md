@@ -1,36 +1,145 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kid Friendly Flagstaff
+
+A responsive, mobile-first website helping parents find kid-friendly activities in Flagstaff, Arizona.
+
+## Features
+
+- **5 Activity Categories**: Play, Hike, Eat, Explore, Shop
+- **Smart Filtering**: Filter by age range, weather conditions, amenities, and category-specific attributes
+- **Kid Friendliness Scores**: 1-5 ratings for each activity
+- **Mobile-First Design**: Optimized for parents on-the-go
+- **Favorites**: Save activities to your favorites (stored locally)
+- **Share Links**: Easy sharing to help other families
+
+## Tech Stack
+
+- **Framework**: Next.js 15 (App Router) with React 19
+- **Language**: TypeScript (strict mode)
+- **Styling**: Tailwind CSS + shadcn/ui components
+- **Animation**: Framer Motion
+- **Icons**: lucide-react
+- **Testing**: Vitest + React Testing Library
+- **Data**: JSON files (MVP approach)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- npm or pnpm
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone <repository-url>
+cd kff
+
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm run start    # Start production server
+npm run lint     # Run ESLint
+npm run test     # Run tests
+```
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+kff/
+├── src/
+│   ├── app/                    # Next.js App Router pages
+│   │   ├── (categories)/       # Category pages (play, hike, eat, explore, shop)
+│   │   ├── activity/[slug]/    # Activity detail pages
+│   │   ├── api/                # API routes
+│   │   └── ...
+│   ├── components/
+│   │   ├── ui/                 # shadcn/ui components
+│   │   ├── layout/             # Header, Footer, Navigation
+│   │   ├── activity/           # Activity cards, grids, details
+│   │   ├── filters/            # Filter components
+│   │   ├── home/               # Homepage components
+│   │   └── shared/             # Shared components
+│   ├── hooks/                  # Custom React hooks
+│   ├── lib/                    # Data loading, utilities
+│   ├── types/                  # TypeScript type definitions
+│   └── utils/                  # Utility functions
+├── data/
+│   └── activities/             # JSON data files
+├── __tests__/                  # Test files
+└── public/                     # Static assets
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Activity Categories
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Play
+Playgrounds, indoor play areas, and recreational facilities suitable for children.
+- **Filters**: Play type, age range, weather, amenities
 
-## Deploy on Vercel
+### Hike
+Family-friendly trails and nature walks around Flagstaff.
+- **Filters**: Difficulty, distance, elevation gain, stroller-friendly, surface type
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Eat
+Kid-friendly restaurants with amenities families need.
+- **Filters**: Meal type, cuisine, features (highchairs, kids menu, etc.)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Explore
+Museums, attractions, and educational experiences.
+- **Filters**: Activity type, indoor/outdoor, age range
+
+### Shop
+Family-friendly stores with items for kids.
+- **Filters**: Shop type, age range
+
+## Data Structure
+
+Activities are stored in JSON files under `data/activities/`. Each category has its own file with category-specific fields.
+
+See [CONTENT.md](./CONTENT.md) for details on adding or editing activities.
+
+## Testing
+
+```bash
+# Run all tests
+npm run test
+
+# Run tests in watch mode
+npm run test -- --watch
+
+# Run tests with coverage
+npm run test -- --coverage
+```
+
+## Deployment
+
+This project is configured for deployment on Vercel.
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for deployment instructions.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## Future Plans
+
+See [FUTURE.md](./FUTURE.md) for planned features and roadmap.
+
+## License
+
+MIT

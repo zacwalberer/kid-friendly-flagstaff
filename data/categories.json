@@ -1,0 +1,42 @@
+[
+  {
+    "id": "play",
+    "name": "Play",
+    "description": "Playgrounds, parks, and indoor play spaces",
+    "icon": "playground",
+    "color": "bg-pink-500",
+    "slug": "play"
+  },
+  {
+    "id": "hike",
+    "name": "Hike",
+    "description": "Kid-friendly trails and nature walks",
+    "icon": "mountain",
+    "color": "bg-green-500",
+    "slug": "hike"
+  },
+  {
+    "id": "eat",
+    "name": "Eat",
+    "description": "Family-friendly restaurants and cafes",
+    "icon": "utensils",
+    "color": "bg-orange-500",
+    "slug": "eat"
+  },
+  {
+    "id": "explore",
+    "name": "Explore",
+    "description": "Museums, attractions, and adventures",
+    "icon": "compass",
+    "color": "bg-blue-500",
+    "slug": "explore"
+  },
+  {
+    "id": "shop",
+    "name": "Shop",
+    "description": "Kid-friendly stores and shops",
+    "icon": "shopping-bag",
+    "color": "bg-purple-500",
+    "slug": "shop"
+  }
+]
