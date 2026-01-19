@@ -16,10 +16,10 @@ export const metadata: Metadata = {
   },
 }
 
-export default function HikePage() {
-  const activities = getHikeActivities()
+export default async function HikePage() {
+  const activities = await getHikeActivities()
   const category = getCategoryBySlug('hike')!
-  const topPick = getTopPickForCategory('hike')
+  const topPick = await getTopPickForCategory('hike')
 
   return (
     <CategoryPageClient

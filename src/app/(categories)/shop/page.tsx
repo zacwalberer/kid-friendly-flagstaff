@@ -16,10 +16,10 @@ export const metadata: Metadata = {
   },
 }
 
-export default function ShopPage() {
-  const activities = getShopActivities()
+export default async function ShopPage() {
+  const activities = await getShopActivities()
   const category = getCategoryBySlug('shop')!
-  const topPick = getTopPickForCategory('shop')
+  const topPick = await getTopPickForCategory('shop')
 
   return (
     <CategoryPageClient

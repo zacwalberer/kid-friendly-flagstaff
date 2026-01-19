@@ -16,10 +16,10 @@ export const metadata: Metadata = {
   },
 }
 
-export default function PlayPage() {
-  const activities = getPlayActivities()
+export default async function PlayPage() {
+  const activities = await getPlayActivities()
   const category = getCategoryBySlug('play')!
-  const topPick = getTopPickForCategory('play')
+  const topPick = await getTopPickForCategory('play')
 
   return (
     <CategoryPageClient

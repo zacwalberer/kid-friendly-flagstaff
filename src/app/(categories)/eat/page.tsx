@@ -16,10 +16,10 @@ export const metadata: Metadata = {
   },
 }
 
-export default function EatPage() {
-  const activities = getEatActivities()
+export default async function EatPage() {
+  const activities = await getEatActivities()
   const category = getCategoryBySlug('eat')!
-  const topPick = getTopPickForCategory('eat')
+  const topPick = await getTopPickForCategory('eat')
 
   return (
     <CategoryPageClient

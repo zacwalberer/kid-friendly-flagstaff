@@ -3,8 +3,8 @@ import { getAllActivities, getCategories } from '@/lib/data'
 
 const BASE_URL = 'https://kidfriendlyflagstaff.com'
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const activities = getAllActivities()
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const activities = await getAllActivities()
   const categories = getCategories()
 
   // Static pages

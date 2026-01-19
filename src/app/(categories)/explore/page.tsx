@@ -16,10 +16,10 @@ export const metadata: Metadata = {
   },
 }
 
-export default function ExplorePage() {
-  const activities = getExploreActivities()
+export default async function ExplorePage() {
+  const activities = await getExploreActivities()
   const category = getCategoryBySlug('explore')!
-  const topPick = getTopPickForCategory('explore')
+  const topPick = await getTopPickForCategory('explore')
 
   return (
     <CategoryPageClient

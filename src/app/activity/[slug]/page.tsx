@@ -9,13 +9,13 @@ interface ActivityPageProps {
 }
 
 export async function generateStaticParams() {
-  const slugs = getAllSlugs()
+  const slugs = await getAllSlugs()
   return slugs.map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({ params }: ActivityPageProps): Promise<Metadata> {
   const { slug } = await params
-  const activity = getActivityBySlug(slug)
+  const activity = await getActivityBySlug(slug)
 
   if (!activity) {
     return {
@@ -49,7 +49,7 @@ const categoryNames: Record<string, string> = {
 
 export default async function ActivityPage({ params }: ActivityPageProps) {
   const { slug } = await params
-  const activity = getActivityBySlug(slug)
+  const activity = await getActivityBySlug(slug)
 
   if (!activity) {
     notFound()
