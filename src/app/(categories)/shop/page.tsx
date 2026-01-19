@@ -5,6 +5,15 @@ import { getShopActivities, getCategoryBySlug, getTopPickForCategory } from '@/l
 export const metadata: Metadata = {
   title: 'Shop',
   description: 'Find kid-friendly stores and shops in Flagstaff, Arizona.',
+  alternates: {
+    canonical: '/shop',
+  },
+  openGraph: {
+    title: 'Shop | Kid Friendly Flagstaff',
+    description: 'Find kid-friendly stores and shops in Flagstaff, Arizona.',
+    url: '/shop',
+    type: 'website',
+  },
 }
 
 export default function ShopPage() {

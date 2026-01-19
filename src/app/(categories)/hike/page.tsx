@@ -5,6 +5,15 @@ import { getHikeActivities, getCategoryBySlug, getTopPickForCategory } from '@/l
 export const metadata: Metadata = {
   title: 'Hike',
   description: 'Find kid-friendly hiking trails and nature walks in Flagstaff, Arizona.',
+  alternates: {
+    canonical: '/hike',
+  },
+  openGraph: {
+    title: 'Hike | Kid Friendly Flagstaff',
+    description: 'Find kid-friendly hiking trails and nature walks in Flagstaff, Arizona.',
+    url: '/hike',
+    type: 'website',
+  },
 }
 
 export default function HikePage() {

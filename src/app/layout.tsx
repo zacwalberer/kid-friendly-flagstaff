@@ -5,6 +5,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Providers } from '@/providers/Providers'
+import { OrganizationJsonLd, WebsiteJsonLd } from '@/components/seo/JsonLd'
 import './globals.css'
 
 const inter = Inter({
@@ -20,6 +21,7 @@ const petrona = Petrona({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://kidfriendlyflagstaff.com'),
   title: {
     default: 'Kid Friendly Flagstaff',
     template: '%s | Kid Friendly Flagstaff',
@@ -37,6 +39,12 @@ export const metadata: Metadata = {
     'playgrounds',
   ],
   authors: [{ name: 'Kid Friendly Flagstaff' }],
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [{ url: '/apple-touch-icon.svg', type: 'image/svg+xml' }],
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -55,6 +63,16 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  other: {
+    'theme-color': '#047857',
   },
 }
 
@@ -65,6 +83,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <OrganizationJsonLd />
+        <WebsiteJsonLd />
+      </head>
       <body
         className={`${inter.variable} ${petrona.variable} antialiased min-h-screen flex flex-col`}
       >

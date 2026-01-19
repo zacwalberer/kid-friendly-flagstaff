@@ -5,6 +5,15 @@ import { getExploreActivities, getCategoryBySlug, getTopPickForCategory } from '
 export const metadata: Metadata = {
   title: 'Explore',
   description: 'Find museums, attractions, and adventures for kids in Flagstaff, Arizona.',
+  alternates: {
+    canonical: '/explore',
+  },
+  openGraph: {
+    title: 'Explore | Kid Friendly Flagstaff',
+    description: 'Find museums, attractions, and adventures for kids in Flagstaff, Arizona.',
+    url: '/explore',
+    type: 'website',
+  },
 }
 
 export default function ExplorePage() {

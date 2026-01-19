@@ -5,6 +5,15 @@ import { getPlayActivities, getCategoryBySlug, getTopPickForCategory } from '@/l
 export const metadata: Metadata = {
   title: 'Play',
   description: 'Discover kid-friendly playgrounds, parks, and indoor play spaces in Flagstaff, Arizona.',
+  alternates: {
+    canonical: '/play',
+  },
+  openGraph: {
+    title: 'Play | Kid Friendly Flagstaff',
+    description: 'Discover kid-friendly playgrounds, parks, and indoor play spaces in Flagstaff, Arizona.',
+    url: '/play',
+    type: 'website',
+  },
 }
 
 export default function PlayPage() {

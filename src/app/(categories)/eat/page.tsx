@@ -5,6 +5,15 @@ import { getEatActivities, getCategoryBySlug, getTopPickForCategory } from '@/li
 export const metadata: Metadata = {
   title: 'Eat',
   description: 'Discover family-friendly restaurants and cafes in Flagstaff, Arizona.',
+  alternates: {
+    canonical: '/eat',
+  },
+  openGraph: {
+    title: 'Eat | Kid Friendly Flagstaff',
+    description: 'Discover family-friendly restaurants and cafes in Flagstaff, Arizona.',
+    url: '/eat',
+    type: 'website',
+  },
 }
 
 export default function EatPage() {
