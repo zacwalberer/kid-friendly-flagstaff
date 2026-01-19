@@ -57,9 +57,9 @@ export const DIFFICULTY_LABELS: Record<Difficulty, string> = {
 }
 
 export const DIFFICULTY_COLORS: Record<Difficulty, string> = {
-  easy: 'bg-green-100 text-green-800',
-  moderate: 'bg-yellow-100 text-yellow-800',
-  hard: 'bg-red-100 text-red-800',
+  easy: 'bg-[var(--forest-100)] text-[var(--forest-700)]',
+  moderate: 'bg-[var(--aspen-300)] text-[var(--forest-900)]',
+  hard: 'bg-[var(--bark-400)] text-white',
 }
 
 export const SURFACE_LABELS: Record<Surface, string> = {
@@ -94,45 +94,46 @@ export const EAT_FEATURE_ICONS: Record<EatFeature, string> = {
   entertainment: '🎭',
 }
 
+// Category info with forest-themed colors
 export const CATEGORY_INFO: CategoryInfo[] = [
   {
     id: 'play',
     name: 'Play',
     description: 'Playgrounds, parks, and indoor play spaces',
-    icon: '🎪',
-    color: 'bg-pink-500',
+    icon: 'Tent',
+    color: 'bg-category-play',
     slug: 'play',
   },
   {
     id: 'hike',
     name: 'Hike',
     description: 'Kid-friendly trails and nature walks',
-    icon: '🥾',
-    color: 'bg-green-500',
+    icon: 'Footprints',
+    color: 'bg-category-hike',
     slug: 'hike',
   },
   {
     id: 'eat',
     name: 'Eat',
     description: 'Family-friendly restaurants and cafes',
-    icon: '🍕',
-    color: 'bg-orange-500',
+    icon: 'UtensilsCrossed',
+    color: 'bg-category-eat',
     slug: 'eat',
   },
   {
     id: 'explore',
     name: 'Explore',
     description: 'Museums, attractions, and adventures',
-    icon: '🔭',
-    color: 'bg-blue-500',
+    icon: 'Telescope',
+    color: 'bg-category-explore',
     slug: 'explore',
   },
   {
     id: 'shop',
     name: 'Shop',
     description: 'Kid-friendly stores and shops',
-    icon: '🛍️',
-    color: 'bg-purple-500',
+    icon: 'ShoppingBag',
+    color: 'bg-category-shop',
     slug: 'shop',
   },
 ]

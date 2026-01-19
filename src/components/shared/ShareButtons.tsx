@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Share2, Link2, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -17,12 +17,15 @@ interface ShareButtonsProps {
 
 export function ShareButtons({ title, url }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false)
+  const [canNativeShare, setCanNativeShare] = useState(false)
+
+  // Check for native share support only on client after hydration
+  useEffect(() => {
+    setCanNativeShare(!!navigator.share)
+  }, [])
 
   // Get the URL to share (use provided URL or current location)
   const getShareUrl = () => url || (typeof window !== 'undefined' ? window.location.href : '')
-
-  // Check for native share support (client-side only)
-  const canNativeShare = typeof navigator !== 'undefined' && !!navigator.share
 
   const handleCopyLink = async () => {
     try {

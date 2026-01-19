@@ -12,7 +12,7 @@ interface AgeRangePillsProps {
 export function AgeRangePills({ selected, onToggle }: AgeRangePillsProps) {
   return (
     <div className="space-y-2">
-      <label className="text-sm font-medium">Age Range</label>
+      <label className="text-sm font-display font-medium text-[var(--forest-700)]">Age Range</label>
       <div className="flex flex-wrap gap-2">
         {ALL_AGE_RANGES.map((age) => {
           const isSelected = selected.includes(age)
@@ -21,7 +21,7 @@ export function AgeRangePills({ selected, onToggle }: AgeRangePillsProps) {
               key={age}
               onClick={() => onToggle(age)}
               className={cn(
-                'filter-pill transition-colors',
+                'filter-pill',
                 isSelected ? 'filter-pill-active' : 'filter-pill-inactive'
               )}
             >

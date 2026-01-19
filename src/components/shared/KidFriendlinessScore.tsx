@@ -23,7 +23,7 @@ export function KidFriendlinessScore({
   return (
     <div className="flex items-center gap-1">
       {showLabel && (
-        <span className="text-sm text-muted-foreground mr-1">Kid-friendly:</span>
+        <span className="text-sm text-[var(--forest-600)] mr-1">Kid-friendly:</span>
       )}
       <div className="flex items-center gap-0.5">
         {[1, 2, 3, 4, 5].map((value) => (
@@ -32,8 +32,8 @@ export function KidFriendlinessScore({
             className={cn(
               sizeClasses[size],
               value <= score
-                ? 'fill-yellow-400 text-yellow-400'
-                : 'fill-gray-200 text-gray-200'
+                ? 'fill-[var(--aspen-400)] text-[var(--aspen-400)]'
+                : 'fill-[var(--cream-300)] text-[var(--cream-300)]'
             )}
           />
         ))}

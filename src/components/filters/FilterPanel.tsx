@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Filter, X, ChevronDown, ChevronUp, Search } from 'lucide-react'
+import { Filter, X, ChevronDown, ChevronUp, Search, Trees } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -119,30 +119,30 @@ export function FilterPanel({
     <div className="space-y-6">
       {/* Search */}
       <div className="space-y-2">
-        <label className="text-sm font-medium">Search</label>
+        <label className="text-sm font-display font-medium text-[var(--forest-700)]">Search</label>
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--forest-400)]" />
           <Input
             type="text"
             placeholder="Search activities..."
             value={filters.searchQuery}
             onChange={(e) => handleSearchChange(e.target.value)}
-            className="pl-9"
+            className="pl-9 border-[var(--cream-300)] bg-[var(--cream-50)] focus:border-[var(--forest-400)] focus:ring-[var(--forest-400)]"
           />
         </div>
       </div>
 
-      <Separator />
+      <Separator className="bg-[var(--cream-300)]" />
 
       {/* Age Range */}
       <AgeRangePills selected={filters.ageRanges} onToggle={handleAgeToggle} />
 
-      <Separator />
+      <Separator className="bg-[var(--cream-300)]" />
 
       {/* Weather */}
       <WeatherFilter selected={filters.weather} onToggle={handleWeatherToggle} />
 
-      <Separator />
+      <Separator className="bg-[var(--cream-300)]" />
 
       {/* Amenities */}
       <AmenityFilter selected={filters.amenities} onToggle={handleAmenityToggle} />
@@ -150,7 +150,7 @@ export function FilterPanel({
       {/* Category-specific filters */}
       {category === 'hike' && (
         <>
-          <Separator />
+          <Separator className="bg-[var(--cream-300)]" />
           <HikeFilters
             selectedDifficulty={(filters as HikeFilterState).difficulty}
             selectedSurface={(filters as HikeFilterState).surface}
@@ -166,7 +166,7 @@ export function FilterPanel({
 
       {category === 'eat' && (
         <>
-          <Separator />
+          <Separator className="bg-[var(--cream-300)]" />
           <EatFilters
             selectedMealTypes={(filters as EatFilterState).mealTypes}
             selectedFeatures={(filters as EatFilterState).features}
@@ -179,8 +179,12 @@ export function FilterPanel({
       {/* Reset button */}
       {activeCount > 0 && (
         <>
-          <Separator />
-          <Button variant="outline" onClick={onReset} className="w-full">
+          <Separator className="bg-[var(--cream-300)]" />
+          <Button
+            variant="outline"
+            onClick={onReset}
+            className="w-full border-[var(--bark-300)] text-[var(--bark-500)] hover:bg-[var(--bark-50)] hover:text-[var(--bark-600)]"
+          >
             <X className="h-4 w-4 mr-2" />
             Clear all filters
           </Button>
@@ -195,19 +199,24 @@ export function FilterPanel({
       <div className="lg:hidden mb-4">
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full border-[var(--cream-300)] text-[var(--forest-700)] hover:bg-[var(--forest-100)]">
               <Filter className="h-4 w-4 mr-2" />
               Filters
               {activeCount > 0 && (
-                <Badge variant="secondary" className="ml-2">
+                <Badge variant="secondary" className="ml-2 bg-[var(--forest-500)] text-white">
                   {activeCount}
                 </Badge>
               )}
             </Button>
           </SheetTrigger>
-          <SheetContent side="left" className="w-[300px]">
-            <SheetHeader>
-              <SheetTitle>Filters</SheetTitle>
+          <SheetContent side="left" className="w-[300px] bg-[var(--cream-50)] border-r-[var(--cream-300)]">
+            <SheetHeader className="border-b border-[var(--cream-300)] pb-4">
+              <SheetTitle className="flex items-center gap-2 font-display text-[var(--forest-800)]">
+                <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-[var(--forest-100)]">
+                  <Trees className="h-4 w-4 text-[var(--forest-600)]" />
+                </div>
+                Filters
+              </SheetTitle>
             </SheetHeader>
             <ScrollArea className="h-[calc(100vh-80px)] mt-4 pr-4">
               {filterContent}
@@ -218,22 +227,26 @@ export function FilterPanel({
 
       {/* Desktop: Collapsible panel */}
       <div className="hidden lg:block mb-6">
-        <div className="border rounded-lg p-4 bg-card">
+        <div className="border border-[var(--cream-300)] rounded-xl p-4 bg-[var(--cream-100)] shadow-forest-sm">
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             className="flex items-center justify-between w-full"
           >
             <div className="flex items-center gap-2">
-              <Filter className="h-4 w-4" />
-              <span className="font-medium">Filters</span>
+              <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-[var(--forest-100)]">
+                <Filter className="h-4 w-4 text-[var(--forest-600)]" />
+              </div>
+              <span className="font-display font-medium text-[var(--forest-800)]">Filters</span>
               {activeCount > 0 && (
-                <Badge variant="secondary">{activeCount} active</Badge>
+                <Badge variant="secondary" className="bg-[var(--forest-500)] text-white">
+                  {activeCount} active
+                </Badge>
               )}
             </div>
             {isExpanded ? (
-              <ChevronUp className="h-4 w-4" />
+              <ChevronUp className="h-4 w-4 text-[var(--forest-500)]" />
             ) : (
-              <ChevronDown className="h-4 w-4" />
+              <ChevronDown className="h-4 w-4 text-[var(--forest-500)]" />
             )}
           </button>
 

@@ -12,6 +12,13 @@ import {
   ArrowLeft,
   Navigation,
   Lightbulb,
+  Star,
+  Tent,
+  Footprints,
+  UtensilsCrossed,
+  Telescope,
+  ShoppingBag,
+  type LucideIcon,
 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -25,7 +32,6 @@ import {
   WEATHER_ICONS,
   WEATHER_LABELS,
   DIFFICULTY_LABELS,
-  DIFFICULTY_COLORS,
   SURFACE_LABELS,
   MEAL_TYPE_LABELS,
   EAT_FEATURE_LABELS,
@@ -40,8 +46,31 @@ interface ActivityDetailProps {
   activity: Activity
 }
 
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  play: Tent,
+  hike: Footprints,
+  eat: UtensilsCrossed,
+  explore: Telescope,
+  shop: ShoppingBag,
+}
+
+const CATEGORY_GRADIENTS: Record<string, string> = {
+  play: 'gradient-play',
+  hike: 'gradient-hike',
+  eat: 'gradient-eat',
+  explore: 'gradient-explore',
+  shop: 'gradient-shop',
+}
+
+const DIFFICULTY_FOREST_COLORS: Record<string, string> = {
+  easy: 'bg-[var(--forest-100)] text-[var(--forest-700)]',
+  moderate: 'bg-[var(--aspen-300)] text-[var(--forest-900)]',
+  hard: 'bg-[var(--bark-400)] text-white',
+}
+
 export function ActivityDetail({ activity }: ActivityDetailProps) {
   const categoryInfo = getCategoryInfo(activity.category)
+  const Icon = CATEGORY_ICONS[activity.category]
 
   const openInMaps = () => {
     const query = encodeURIComponent(activity.address)
@@ -58,7 +87,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
       {/* Back link */}
       <motion.div variants={slideUp} className="mb-6">
         <Link href={`/${activity.category}`}>
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="sm" className="text-[var(--forest-600)] hover:text-[var(--forest-800)] hover:bg-[var(--forest-100)]">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to {categoryInfo.name}
           </Button>
@@ -70,12 +99,20 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <Badge variant="secondary">{categoryInfo.name}</Badge>
+              <Badge variant="secondary" className="bg-[var(--forest-100)] text-[var(--forest-700)] border-0 flex items-center gap-1">
+                {Icon && <Icon className="h-3 w-3" />}
+                {categoryInfo.name}
+              </Badge>
               {activity.isTopPick && (
-                <Badge className="bg-yellow-500 text-white">Top Pick</Badge>
+                <Badge className="top-pick-badge">
+                  <Star className="h-3 w-3 mr-1 fill-current" />
+                  Top Pick
+                </Badge>
               )}
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-2">{activity.name}</h1>
+            <h1 className="text-3xl md:text-4xl font-display font-bold mb-2 text-[var(--forest-800)]">
+              {activity.name}
+            </h1>
             <KidFriendlinessScore
               score={activity.kidFriendlinessScore}
               size="lg"
@@ -89,7 +126,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
       {/* Hero Image */}
       <motion.div
         variants={slideUp}
-        className="relative aspect-video rounded-lg overflow-hidden mb-8 bg-muted"
+        className="relative aspect-video rounded-xl overflow-hidden mb-8 bg-[var(--cream-200)] shadow-forest-lg"
       >
         {activity.images[0] ? (
           <Image
@@ -100,14 +137,8 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
             priority
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-muted to-muted-foreground/20">
-            <span className="text-6xl">
-              {activity.category === 'play' && '🎪'}
-              {activity.category === 'hike' && '🥾'}
-              {activity.category === 'eat' && '🍕'}
-              {activity.category === 'explore' && '🔭'}
-              {activity.category === 'shop' && '🛍️'}
-            </span>
+          <div className={`absolute inset-0 flex items-center justify-center ${CATEGORY_GRADIENTS[activity.category]}`}>
+            {Icon && <Icon className="h-20 w-20 text-white/80" strokeWidth={1.5} />}
           </div>
         )}
       </motion.div>
@@ -117,12 +148,12 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
         <motion.div variants={staggerContainer} className="lg:col-span-2 space-y-6">
           {/* Description */}
           <motion.div variants={staggerItem}>
-            <Card>
+            <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
               <CardHeader>
-                <CardTitle>About</CardTitle>
+                <CardTitle className="font-display text-[var(--forest-800)]">About</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-[var(--forest-600)] leading-relaxed">
                   {activity.description}
                 </p>
               </CardContent>
@@ -132,43 +163,46 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
           {/* Category-specific details */}
           {ActivityTypes.isHikeActivity(activity) && (
             <motion.div variants={staggerItem}>
-              <Card>
+              <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
                 <CardHeader>
-                  <CardTitle>Trail Info</CardTitle>
+                  <CardTitle className="font-display text-[var(--forest-800)] flex items-center gap-2">
+                    <Footprints className="h-5 w-5 text-[var(--category-hike)]" />
+                    Trail Info
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <p className="text-sm text-muted-foreground">Distance</p>
-                      <p className="font-medium">{formatDistance(activity.distance)}</p>
+                      <p className="text-sm text-[var(--forest-500)]">Distance</p>
+                      <p className="font-display font-medium text-[var(--forest-800)]">{formatDistance(activity.distance)}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Difficulty</p>
-                      <Badge className={DIFFICULTY_COLORS[activity.difficulty]}>
+                      <p className="text-sm text-[var(--forest-500)]">Difficulty</p>
+                      <Badge className={DIFFICULTY_FOREST_COLORS[activity.difficulty]}>
                         {DIFFICULTY_LABELS[activity.difficulty]}
                       </Badge>
                     </div>
                     {activity.elevationGain && (
                       <div>
-                        <p className="text-sm text-muted-foreground">Elevation Gain</p>
-                        <p className="font-medium">
+                        <p className="text-sm text-[var(--forest-500)]">Elevation Gain</p>
+                        <p className="font-display font-medium text-[var(--forest-800)]">
                           {formatElevation(activity.elevationGain)}
                         </p>
                       </div>
                     )}
                     <div>
-                      <p className="text-sm text-muted-foreground">Surface</p>
-                      <p className="font-medium">{SURFACE_LABELS[activity.surface]}</p>
+                      <p className="text-sm text-[var(--forest-500)]">Surface</p>
+                      <p className="font-display font-medium text-[var(--forest-800)]">{SURFACE_LABELS[activity.surface]}</p>
                     </div>
                   </div>
-                  <Separator />
+                  <Separator className="bg-[var(--cream-300)]" />
                   <div className="flex flex-wrap gap-4">
-                    <Badge variant={activity.isStrollerFriendly ? 'default' : 'secondary'}>
+                    <Badge variant={activity.isStrollerFriendly ? 'default' : 'secondary'} className={activity.isStrollerFriendly ? 'bg-[var(--forest-500)] text-white' : 'bg-[var(--cream-200)] text-[var(--forest-600)]'}>
                       {activity.isStrollerFriendly
                         ? 'Stroller Friendly'
                         : 'Not Stroller Friendly'}
                     </Badge>
-                    <Badge variant={activity.isLoop ? 'default' : 'secondary'}>
+                    <Badge variant={activity.isLoop ? 'default' : 'secondary'} className={activity.isLoop ? 'bg-[var(--forest-500)] text-white' : 'bg-[var(--cream-200)] text-[var(--forest-600)]'}>
                       {activity.isLoop ? 'Loop Trail' : 'Out and Back'}
                     </Badge>
                   </div>
@@ -179,30 +213,33 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
 
           {ActivityTypes.isEatActivity(activity) && (
             <motion.div variants={staggerItem}>
-              <Card>
+              <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
                 <CardHeader>
-                  <CardTitle>Restaurant Info</CardTitle>
+                  <CardTitle className="font-display text-[var(--forest-800)] flex items-center gap-2">
+                    <UtensilsCrossed className="h-5 w-5 text-[var(--category-eat)]" />
+                    Restaurant Info
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <p className="text-sm text-muted-foreground mb-2">Cuisine</p>
-                    <p className="font-medium">{activity.cuisine}</p>
+                    <p className="text-sm text-[var(--forest-500)] mb-2">Cuisine</p>
+                    <p className="font-display font-medium text-[var(--forest-800)]">{activity.cuisine}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground mb-2">Meal Types</p>
+                    <p className="text-sm text-[var(--forest-500)] mb-2">Meal Types</p>
                     <div className="flex flex-wrap gap-2">
                       {activity.mealTypes.map((meal) => (
-                        <Badge key={meal} variant="secondary">
+                        <Badge key={meal} variant="secondary" className="bg-[var(--forest-100)] text-[var(--forest-700)]">
                           {MEAL_TYPE_LABELS[meal]}
                         </Badge>
                       ))}
                     </div>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground mb-2">Features</p>
+                    <p className="text-sm text-[var(--forest-500)] mb-2">Features</p>
                     <div className="flex flex-wrap gap-2">
                       {activity.features.map((feature) => (
-                        <Badge key={feature} variant="outline">
+                        <Badge key={feature} variant="outline" className="border-[var(--cream-300)] text-[var(--forest-600)]">
                           {EAT_FEATURE_LABELS[feature]}
                         </Badge>
                       ))}
@@ -215,25 +252,30 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
 
           {ActivityTypes.isExploreActivity(activity) && (
             <motion.div variants={staggerItem}>
-              <Card>
+              <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
                 <CardHeader>
-                  <CardTitle>Attraction Info</CardTitle>
+                  <CardTitle className="font-display text-[var(--forest-800)] flex items-center gap-2">
+                    <Telescope className="h-5 w-5 text-[var(--category-explore)]" />
+                    Attraction Info
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <p className="text-sm text-muted-foreground">Duration</p>
-                      <p className="font-medium">{formatDuration(activity.duration)}</p>
+                      <p className="text-sm text-[var(--forest-500)]">Duration</p>
+                      <p className="font-display font-medium text-[var(--forest-800)]">{formatDuration(activity.duration)}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Admission</p>
-                      <p className="font-medium">
+                      <p className="text-sm text-[var(--forest-500)]">Admission</p>
+                      <p className="font-display font-medium text-[var(--forest-800)]">
                         {activity.admissionRequired ? 'Required' : 'Free'}
                       </p>
                     </div>
                   </div>
                   {activity.advanceBooking && (
-                    <Badge variant="outline">Advance Booking Recommended</Badge>
+                    <Badge variant="outline" className="border-[var(--aspen-400)] text-[var(--forest-700)] bg-[var(--aspen-300)]/30">
+                      Advance Booking Recommended
+                    </Badge>
                   )}
                 </CardContent>
               </Card>
@@ -243,10 +285,12 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
           {/* Tips */}
           {activity.tips && activity.tips.length > 0 && (
             <motion.div variants={staggerItem}>
-              <Card>
+              <Card className="border-[var(--aspen-300)] bg-gradient-to-br from-[var(--aspen-300)]/20 to-[var(--cream-100)]">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Lightbulb className="h-5 w-5 text-yellow-500" />
+                  <CardTitle className="flex items-center gap-2 font-display text-[var(--forest-800)]">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-[var(--aspen-400)]">
+                      <Lightbulb className="h-4 w-4 text-[var(--forest-900)]" />
+                    </div>
                     Tips from Parents
                   </CardTitle>
                 </CardHeader>
@@ -254,8 +298,8 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                   <ul className="space-y-2">
                     {activity.tips.map((tip, index) => (
                       <li key={index} className="flex items-start gap-2">
-                        <span className="text-yellow-500">•</span>
-                        <span className="text-muted-foreground">{tip}</span>
+                        <span className="text-[var(--aspen-500)] mt-1">•</span>
+                        <span className="text-[var(--forest-600)]">{tip}</span>
                       </li>
                     ))}
                   </ul>
@@ -269,20 +313,20 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
         <motion.div variants={staggerContainer} className="space-y-6">
           {/* Quick info */}
           <motion.div variants={staggerItem}>
-            <Card>
+            <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
               <CardHeader>
-                <CardTitle>Quick Info</CardTitle>
+                <CardTitle className="font-display text-[var(--forest-800)]">Quick Info</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {/* Address */}
                 <div className="flex items-start gap-3">
-                  <MapPin className="h-5 w-5 text-muted-foreground mt-0.5" />
+                  <MapPin className="h-5 w-5 text-[var(--forest-500)] mt-0.5" />
                   <div>
-                    <p className="font-medium">{activity.address}</p>
+                    <p className="font-medium text-[var(--forest-800)]">{activity.address}</p>
                     <Button
                       variant="link"
                       size="sm"
-                      className="p-0 h-auto"
+                      className="p-0 h-auto text-[var(--forest-500)] hover:text-[var(--forest-700)]"
                       onClick={openInMaps}
                     >
                       <Navigation className="h-3 w-3 mr-1" />
@@ -294,10 +338,10 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                 {/* Hours */}
                 {activity.hours && (
                   <div className="flex items-start gap-3">
-                    <Clock className="h-5 w-5 text-muted-foreground mt-0.5" />
+                    <Clock className="h-5 w-5 text-[var(--forest-500)] mt-0.5" />
                     <div>
-                      <p className="text-sm text-muted-foreground">Hours</p>
-                      <p className="font-medium">{activity.hours}</p>
+                      <p className="text-sm text-[var(--forest-500)]">Hours</p>
+                      <p className="font-medium text-[var(--forest-800)]">{activity.hours}</p>
                     </div>
                   </div>
                 )}
@@ -305,10 +349,10 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                 {/* Price */}
                 {activity.priceRange && (
                   <div className="flex items-start gap-3">
-                    <DollarSign className="h-5 w-5 text-muted-foreground mt-0.5" />
+                    <DollarSign className="h-5 w-5 text-[var(--forest-500)] mt-0.5" />
                     <div>
-                      <p className="text-sm text-muted-foreground">Price Range</p>
-                      <p className="font-medium">{activity.priceRange}</p>
+                      <p className="text-sm text-[var(--forest-500)]">Price Range</p>
+                      <p className="font-medium text-[var(--forest-800)]">{activity.priceRange}</p>
                     </div>
                   </div>
                 )}
@@ -316,12 +360,12 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                 {/* Phone */}
                 {activity.phone && (
                   <div className="flex items-start gap-3">
-                    <Phone className="h-5 w-5 text-muted-foreground mt-0.5" />
+                    <Phone className="h-5 w-5 text-[var(--forest-500)] mt-0.5" />
                     <div>
-                      <p className="text-sm text-muted-foreground">Phone</p>
+                      <p className="text-sm text-[var(--forest-500)]">Phone</p>
                       <a
                         href={`tel:${activity.phone}`}
-                        className="font-medium hover:underline"
+                        className="font-medium text-[var(--forest-800)] hover:text-[var(--forest-600)] hover:underline"
                       >
                         {activity.phone}
                       </a>
@@ -332,14 +376,14 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                 {/* Website */}
                 {activity.website && (
                   <div className="flex items-start gap-3">
-                    <Globe className="h-5 w-5 text-muted-foreground mt-0.5" />
+                    <Globe className="h-5 w-5 text-[var(--forest-500)] mt-0.5" />
                     <div>
-                      <p className="text-sm text-muted-foreground">Website</p>
+                      <p className="text-sm text-[var(--forest-500)]">Website</p>
                       <a
                         href={activity.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-medium hover:underline break-all"
+                        className="font-medium text-[var(--forest-800)] hover:text-[var(--forest-600)] hover:underline break-all"
                       >
                         Visit Website
                       </a>
@@ -352,14 +396,14 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
 
           {/* Age ranges */}
           <motion.div variants={staggerItem}>
-            <Card>
+            <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
               <CardHeader>
-                <CardTitle>Best For Ages</CardTitle>
+                <CardTitle className="font-display text-[var(--forest-800)]">Best For Ages</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
                   {activity.ageRanges.map((age) => (
-                    <Badge key={age} variant="secondary">
+                    <Badge key={age} variant="secondary" className="bg-[var(--forest-100)] text-[var(--forest-700)]">
                       {AGE_DISPLAY_NAMES[age]}
                     </Badge>
                   ))}
@@ -370,16 +414,16 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
 
           {/* Weather */}
           <motion.div variants={staggerItem}>
-            <Card>
+            <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
               <CardHeader>
-                <CardTitle>Great For</CardTitle>
+                <CardTitle className="font-display text-[var(--forest-800)]">Great For</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-3">
                   {activity.weather.map((w) => (
-                    <div key={w} className="flex items-center gap-1">
+                    <div key={w} className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-[var(--cream-200)]">
                       <span className="text-lg">{WEATHER_ICONS[w]}</span>
-                      <span className="text-sm">{WEATHER_LABELS[w]}</span>
+                      <span className="text-sm text-[var(--forest-700)]">{WEATHER_LABELS[w]}</span>
                     </div>
                   ))}
                 </div>
@@ -389,9 +433,9 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
 
           {/* Amenities */}
           <motion.div variants={staggerItem}>
-            <Card>
+            <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
               <CardHeader>
-                <CardTitle>Amenities</CardTitle>
+                <CardTitle className="font-display text-[var(--forest-800)]">Amenities</CardTitle>
               </CardHeader>
               <CardContent>
                 <AmenityIcons amenities={activity.amenities} showLabels />

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Inter, Petrona } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Header } from '@/components/layout/Header'
@@ -7,14 +7,16 @@ import { Footer } from '@/components/layout/Footer'
 import { Providers } from '@/providers/Providers'
 import './globals.css'
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const inter = Inter({
+  variable: '--font-inter',
   subsets: ['latin'],
+  weight: ['400', '500', '600'],
 })
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const petrona = Petrona({
+  variable: '--font-petrona',
   subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
 })
 
 export const metadata: Metadata = {
@@ -64,7 +66,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${inter.variable} ${petrona.variable} antialiased min-h-screen flex flex-col`}
       >
         <Providers>
           <Header />
