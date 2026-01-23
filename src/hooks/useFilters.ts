@@ -6,7 +6,7 @@ import type {
   HikeFilterState,
   EatFilterState,
   PlayFilterState,
-  ExploreFilterState,
+  LearnFilterState,
   ShopFilterState,
   FilterAction,
 } from '@/types/filters'
@@ -25,7 +25,7 @@ export const initialHikeFilterState: HikeFilterState = {
   ...initialBaseFilterState,
   difficulty: [],
   surface: [],
-  isLoop: null,
+  hikeType: null,
   shadeCoverage: null,
 }
 
@@ -39,17 +39,20 @@ export const initialPlayFilterState: PlayFilterState = {
   ...initialBaseFilterState,
   hasFencedArea: null,
   setting: null,
+  shadeCoverage: null,
+  features: [],
 }
 
-export const initialExploreFilterState: ExploreFilterState = {
+export const initialLearnFilterState: LearnFilterState = {
   ...initialBaseFilterState,
   admissionRequired: null,
   setting: null,
+  features: [],
 }
 
 export const initialShopFilterState: ShopFilterState = {
   ...initialBaseFilterState,
-  kidsFocused: null,
+  features: [],
 }
 
 function getInitialState(category: Category) {
@@ -60,8 +63,8 @@ function getInitialState(category: Category) {
       return initialEatFilterState
     case 'play':
       return initialPlayFilterState
-    case 'explore':
-      return initialExploreFilterState
+    case 'learn':
+      return initialLearnFilterState
     case 'shop':
       return initialShopFilterState
     default:
@@ -70,7 +73,7 @@ function getInitialState(category: Category) {
 }
 
 function filterReducer(
-  state: BaseFilterState | HikeFilterState | EatFilterState | PlayFilterState | ExploreFilterState | ShopFilterState,
+  state: BaseFilterState | HikeFilterState | EatFilterState | PlayFilterState | LearnFilterState | ShopFilterState,
   action: FilterAction
 ) {
   switch (action.type) {
@@ -126,8 +129,8 @@ function filterReducer(
         : [...hikeState.surface, action.payload]
       return { ...state, surface }
     }
-    case 'SET_IS_LOOP':
-      return { ...state, isLoop: action.payload }
+    case 'SET_HIKE_TYPE':
+      return { ...state, hikeType: action.payload }
     case 'SET_SHADE_COVERAGE':
       return { ...state, shadeCoverage: action.payload }
     case 'SET_MEAL_TYPES':
@@ -154,15 +157,26 @@ function filterReducer(
       return { ...state, setting: action.payload }
     case 'SET_ADMISSION_REQUIRED':
       return { ...state, admissionRequired: action.payload }
-    case 'SET_KIDS_FOCUSED':
-      return { ...state, kidsFocused: action.payload }
+    case 'SET_PLAY_FEATURES':
+    case 'SET_LEARN_FEATURES':
+    case 'SET_SHOP_FEATURES':
+      return { ...state, features: action.payload }
+    case 'TOGGLE_PLAY_FEATURE':
+    case 'TOGGLE_LEARN_FEATURE':
+    case 'TOGGLE_SHOP_FEATURE': {
+      const currentState = state as PlayFilterState | LearnFilterState | ShopFilterState
+      const currentFeatures = currentState.features || []
+      const features = currentFeatures.includes(action.payload as never)
+        ? currentFeatures.filter((f) => f !== action.payload)
+        : [...currentFeatures, action.payload]
+      return { ...state, features }
+    }
     case 'RESET_FILTERS':
       // Return the initial state based on current category type
       if ('difficulty' in state) return initialHikeFilterState
       if ('mealTypes' in state) return initialEatFilterState
       if ('hasFencedArea' in state) return initialPlayFilterState
-      if ('admissionRequired' in state) return initialExploreFilterState
-      if ('kidsFocused' in state) return initialShopFilterState
+      if ('admissionRequired' in state) return initialLearnFilterState
       return initialBaseFilterState
     default:
       return state
@@ -198,19 +212,23 @@ export function useFilters(category: Category) {
     const hikeFilters = filters as HikeFilterState
     const eatFilters = filters as EatFilterState
     const playFilters = filters as PlayFilterState
-    const exploreFilters = filters as ExploreFilterState
+    const learnFilters = filters as LearnFilterState
     const shopFilters = filters as ShopFilterState
 
     if ('difficulty' in filters && hikeFilters.difficulty?.length > 0) return true
     if ('surface' in filters && hikeFilters.surface?.length > 0) return true
-    if ('isLoop' in filters && hikeFilters.isLoop !== null) return true
+    if ('hikeType' in filters && hikeFilters.hikeType !== null) return true
     if ('shadeCoverage' in filters && hikeFilters.shadeCoverage !== null) return true
     if ('mealTypes' in filters && eatFilters.mealTypes?.length > 0) return true
-    if ('features' in filters && eatFilters.features?.length > 0) return true
+    if ('features' in filters) {
+      if ((eatFilters.features as unknown[])?.length > 0) return true
+      if ((playFilters.features as unknown[])?.length > 0) return true
+      if ((learnFilters.features as unknown[])?.length > 0) return true
+      if ((shopFilters.features as unknown[])?.length > 0) return true
+    }
     if ('hasFencedArea' in filters && playFilters.hasFencedArea !== null) return true
-    if ('setting' in filters && (playFilters.setting !== null || exploreFilters.setting !== null)) return true
-    if ('admissionRequired' in filters && exploreFilters.admissionRequired !== null) return true
-    if ('kidsFocused' in filters && shopFilters.kidsFocused !== null) return true
+    if ('setting' in filters && (playFilters.setting !== null || learnFilters.setting !== null)) return true
+    if ('admissionRequired' in filters && learnFilters.admissionRequired !== null) return true
 
     return false
   }, [filters])

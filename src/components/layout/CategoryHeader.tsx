@@ -13,7 +13,7 @@ const CATEGORY_EMOJIS: Record<string, string> = {
   play: '🎪',
   hike: '🥾',
   eat: '🍕',
-  explore: '🔭',
+  learn: '🎓',
   shop: '🛍️',
 }
 

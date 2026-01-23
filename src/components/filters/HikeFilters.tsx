@@ -5,31 +5,33 @@ import {
   DIFFICULTY_LABELS,
   SURFACE_LABELS,
   SHADE_COVERAGE_LABELS,
+  HIKE_TYPE_LABELS,
   ALL_DIFFICULTIES,
   ALL_SURFACES,
   ALL_SHADE_COVERAGES,
+  ALL_HIKE_TYPES,
 } from '@/utils/constants'
-import type { Difficulty, Surface, ShadeCoverage } from '@/types'
+import type { Difficulty, Surface, ShadeCoverage, HikeType } from '@/types'
 
 interface HikeFiltersProps {
   selectedDifficulty: Difficulty[]
   selectedSurface: Surface[]
-  isLoop: boolean | null
+  hikeType: HikeType | null
   shadeCoverage: ShadeCoverage | null
   onToggleDifficulty: (difficulty: Difficulty) => void
   onToggleSurface: (surface: Surface) => void
-  onSetIsLoop: (value: boolean | null) => void
+  onSetHikeType: (value: HikeType | null) => void
   onSetShadeCoverage: (value: ShadeCoverage | null) => void
 }
 
 export function HikeFilters({
   selectedDifficulty,
   selectedSurface,
-  isLoop,
+  hikeType,
   shadeCoverage,
   onToggleDifficulty,
   onToggleSurface,
-  onSetIsLoop,
+  onSetHikeType,
   onSetShadeCoverage,
 }: HikeFiltersProps) {
   return (
@@ -78,28 +80,25 @@ export function HikeFilters({
         </div>
       </div>
 
-      {/* Loop Trail */}
+      {/* Trail Type */}
       <div className="space-y-2">
         <label className="text-sm font-medium">Trail Type</label>
         <div className="flex gap-2">
-          <button
-            onClick={() => onSetIsLoop(isLoop === true ? null : true)}
-            className={cn(
-              'filter-pill transition-colors',
-              isLoop === true ? 'filter-pill-active' : 'filter-pill-inactive'
-            )}
-          >
-            Loop
-          </button>
-          <button
-            onClick={() => onSetIsLoop(isLoop === false ? null : false)}
-            className={cn(
-              'filter-pill transition-colors',
-              isLoop === false ? 'filter-pill-active' : 'filter-pill-inactive'
-            )}
-          >
-            Out & Back
-          </button>
+          {ALL_HIKE_TYPES.map((type) => {
+            const isSelected = hikeType === type
+            return (
+              <button
+                key={type}
+                onClick={() => onSetHikeType(isSelected ? null : type)}
+                className={cn(
+                  'filter-pill transition-colors',
+                  isSelected ? 'filter-pill-active' : 'filter-pill-inactive'
+                )}
+              >
+                {HIKE_TYPE_LABELS[type]}
+              </button>
+            )
+          })}
         </div>
       </div>
 

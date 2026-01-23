@@ -4,7 +4,7 @@ import type {
   PlayActivity,
   HikeActivity,
   EatActivity,
-  ExploreActivity,
+  LearnActivity,
   ShopActivity,
   Category,
   AgeRange,
@@ -17,6 +17,15 @@ import type {
   EatFeature,
   Setting,
   ShadeCoverage,
+  PriceRange,
+  HikeType,
+  HikeFeature,
+  PlayType,
+  PlayFeature,
+  LearnType,
+  LearnFeature,
+  ShopType,
+  ShopFeature,
 } from '@/types'
 
 // Airtable field names mapping to our schema
@@ -33,7 +42,7 @@ interface AirtableActivityRecord {
   phone?: string
   website?: string
   hours?: string
-  priceRange?: string
+  priceRange?: PriceRange[]
   kidFriendlinessScore?: number
   ageRanges?: AgeRange[]
   weather?: Weather[]
@@ -49,43 +58,40 @@ interface AirtableActivityRecord {
   status?: 'Draft' | 'Published' | 'Archived'
 
   // Play-specific
-  playType?: 'playground' | 'indoor-play' | 'sports' | 'splash-pad' | 'arcade'
+  playType?: PlayType
   setting?: Setting
   hasFencedArea?: boolean
-  ageGroupSections?: string
-  playFeatures?: string
+  shadeCoverage?: ShadeCoverage
+  hasWaterFountain?: boolean
+  hasPicnicTable?: boolean
+  playFeatures?: PlayFeature[]
 
   // Hike-specific
   difficulty?: Difficulty
   distance?: string
   elevationGain?: string
   surface?: Surface
-  isLoop?: boolean
+  hikeType?: HikeType
   trailheadParking?: string
   bestSeason?: string[]
-  hikeFeatures?: string
-  shadeCoverage?: ShadeCoverage
+  hikeFeatures?: HikeFeature[]
   duration?: string
 
   // Eat-specific
   cuisine?: string
   mealTypes?: MealType[]
   eatFeatures?: EatFeature[]
-  averageMealTime?: string
   noiseLevel?: 'quiet' | 'moderate' | 'loud'
-  changingTables?: boolean
 
-  // Explore-specific
-  exploreType?: 'museum' | 'nature' | 'attraction' | 'historic-site' | 'adventure'
+  // Learn-specific
+  learnType?: LearnType
   admissionRequired?: boolean
   advanceBooking?: boolean
-  exploreFeatures?: string
+  learnFeatures?: LearnFeature[]
 
   // Shop-specific
-  shopType?: 'toys' | 'books' | 'clothing' | 'resale' | 'general'
-  hasPlayArea?: boolean
-  kidsFocused?: boolean
-  shopFeatures?: string
+  shopType?: ShopType
+  shopFeatures?: ShopFeature[]
 }
 
 // Initialize Airtable
@@ -166,12 +172,10 @@ function transformRecord(
         playType: fields.playType || 'playground',
         setting: fields.setting || 'outdoor',
         hasFencedArea: fields.hasFencedArea,
-        ageGroupSections: fields.ageGroupSections
-          ? parseStringToArray(fields.ageGroupSections)
-          : undefined,
-        features: fields.playFeatures
-          ? parseStringToArray(fields.playFeatures)
-          : undefined,
+        shadeCoverage: fields.shadeCoverage,
+        hasWaterFountain: fields.hasWaterFountain,
+        hasPicnicTable: fields.hasPicnicTable,
+        features: fields.playFeatures,
       } as PlayActivity
 
     case 'hike':
@@ -182,14 +186,14 @@ function transformRecord(
         distance: fields.distance || '',
         elevationGain: fields.elevationGain,
         surface: fields.surface || 'mixed',
-        isLoop: fields.isLoop || false,
+        hikeType: fields.hikeType || 'loop',
         trailheadParking: fields.trailheadParking,
         bestSeason: fields.bestSeason,
-        features: fields.hikeFeatures
-          ? parseStringToArray(fields.hikeFeatures)
-          : undefined,
+        features: fields.hikeFeatures,
         shadeCoverage: fields.shadeCoverage,
         duration: fields.duration,
+        hasWaterFountain: fields.hasWaterFountain,
+        hasPicnicTable: fields.hasPicnicTable,
       } as HikeActivity
 
     case 'eat':
@@ -199,34 +203,26 @@ function transformRecord(
         cuisine: fields.cuisine || '',
         mealTypes: fields.mealTypes || [],
         features: fields.eatFeatures || [],
-        averageMealTime: fields.averageMealTime,
         noiseLevel: fields.noiseLevel,
-        changingTables: fields.changingTables,
       } as EatActivity
 
-    case 'explore':
+    case 'learn':
       return {
         ...baseActivity,
-        category: 'explore',
-        exploreType: fields.exploreType || 'attraction',
+        category: 'learn',
+        learnType: fields.learnType || 'attraction',
         setting: fields.setting || 'indoor',
         admissionRequired: fields.admissionRequired || false,
         advanceBooking: fields.advanceBooking,
-        features: fields.exploreFeatures
-          ? parseStringToArray(fields.exploreFeatures)
-          : undefined,
-      } as ExploreActivity
+        features: fields.learnFeatures,
+      } as LearnActivity
 
     case 'shop':
       return {
         ...baseActivity,
         category: 'shop',
         shopType: fields.shopType || 'general',
-        hasPlayArea: fields.hasPlayArea,
-        kidsFocused: fields.kidsFocused || false,
-        features: fields.shopFeatures
-          ? parseStringToArray(fields.shopFeatures)
-          : undefined,
+        features: fields.shopFeatures,
       } as ShopActivity
 
     default:

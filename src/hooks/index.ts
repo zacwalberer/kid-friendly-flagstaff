@@ -7,6 +7,6 @@ export {
   initialHikeFilterState,
   initialEatFilterState,
   initialPlayFilterState,
-  initialExploreFilterState,
+  initialLearnFilterState,
   initialShopFilterState,
 } from './useFilters'

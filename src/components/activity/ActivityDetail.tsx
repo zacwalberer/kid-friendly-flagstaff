@@ -16,7 +16,7 @@ import {
   Tent,
   Footprints,
   UtensilsCrossed,
-  Telescope,
+  GraduationCap,
   ShoppingBag,
   type LucideIcon,
 } from 'lucide-react'
@@ -39,6 +39,7 @@ import {
   ACCESSIBILITY_ICONS,
   SETTING_LABELS,
   SHADE_COVERAGE_LABELS,
+  HIKE_TYPE_LABELS,
   getCategoryInfo,
 } from '@/utils/constants'
 import { formatDistance, formatElevation, formatDuration } from '@/utils/formatDistance'
@@ -54,7 +55,7 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   play: Tent,
   hike: Footprints,
   eat: UtensilsCrossed,
-  explore: Telescope,
+  learn: GraduationCap,
   shop: ShoppingBag,
 }
 
@@ -62,7 +63,7 @@ const CATEGORY_GRADIENTS: Record<string, string> = {
   play: 'gradient-play',
   hike: 'gradient-hike',
   eat: 'gradient-eat',
-  explore: 'gradient-explore',
+  learn: 'gradient-learn',
   shop: 'gradient-shop',
 }
 
@@ -201,8 +202,8 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                   </div>
                   <Separator className="bg-[var(--cream-300)]" />
                   <div className="flex flex-wrap gap-4">
-                    <Badge variant={activity.isLoop ? 'default' : 'secondary'} className={activity.isLoop ? 'bg-[var(--forest-500)] text-white' : 'bg-[var(--cream-200)] text-[var(--forest-600)]'}>
-                      {activity.isLoop ? 'Loop Trail' : 'Out and Back'}
+                    <Badge variant="secondary" className="bg-[var(--cream-200)] text-[var(--forest-600)]">
+                      {HIKE_TYPE_LABELS[activity.hikeType]}
                     </Badge>
                     {activity.shadeCoverage && (
                       <Badge variant="secondary" className="bg-[var(--cream-200)] text-[var(--forest-600)]">
@@ -267,11 +268,6 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                           {EAT_FEATURE_LABELS[feature]}
                         </Badge>
                       ))}
-                      {activity.changingTables && (
-                        <Badge variant="secondary" className="bg-[var(--forest-100)] text-[var(--forest-700)]">
-                          Changing Tables
-                        </Badge>
-                      )}
                     </div>
                   </div>
                 </CardContent>
@@ -279,12 +275,12 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
             </motion.div>
           )}
 
-          {ActivityTypes.isExploreActivity(activity) && (
+          {ActivityTypes.isLearnActivity(activity) && (
             <motion.div variants={staggerItem}>
               <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
                 <CardHeader>
                   <CardTitle className="font-display text-[var(--forest-800)] flex items-center gap-2">
-                    <Telescope className="h-5 w-5 text-[var(--category-explore)]" />
+                    <GraduationCap className="h-5 w-5 text-[var(--category-learn)]" />
                     Attraction Info
                   </CardTitle>
                 </CardHeader>

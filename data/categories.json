@@ -24,12 +24,12 @@
     "slug": "eat"
   },
   {
-    "id": "explore",
-    "name": "Explore",
-    "description": "Museums, attractions, and adventures",
-    "icon": "compass",
+    "id": "learn",
+    "name": "Learn",
+    "description": "Museums, attractions, and educational experiences",
+    "icon": "graduation-cap",
     "color": "bg-blue-500",
-    "slug": "explore"
+    "slug": "learn"
   },
   {
     "id": "shop",

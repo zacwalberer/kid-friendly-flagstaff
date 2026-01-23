@@ -25,13 +25,13 @@ Set up the following fields in your Listings table:
 
 | Field Name | Type | Notes |
 |------------|------|-------|
-| `name` | Single line text | Activity name |
+| `name` | Single line text | Listing name |
 | `slug` | Single line text | URL-safe identifier (e.g., "thorpe-park") |
-| `category` | Single select | Options: play, hike, eat, explore, shop |
+| `category` | Single select | play, hike, eat, learn, shop |
 | `description` | Long text | Full description |
 | `shortDescription` | Single line text | Brief summary for cards |
 | `address` | Single line text | Street address |
-| `status` | Single select | Options: Draft, Published, Archived |
+| `status` | Single select | Draft, Published, Archived |
 
 ### Contact & Hours
 
@@ -40,17 +40,17 @@ Set up the following fields in your Listings table:
 | `phone` | Phone number | Optional |
 | `website` | URL | Optional |
 | `hours` | Single line text | e.g., "Mon-Fri 9am-5pm" |
-| `priceRange` | Single line text | e.g., "Free", "$", "$$" |
+| `priceRange` | Multiple select | Free, $, $$, $$$ |
 
 ### Ratings & Tags
 
 | Field Name | Type | Notes |
 |------------|------|-------|
 | `kidFriendlinessScore` | Rating (1-5 stars) | Kid-friendliness rating |
-| `ageRanges` | Multiple select | Options: baby, toddler, preschool, elementary, tween |
-| `weather` | Multiple select | Options: sunny, rainy, snowy, cold |
-| `amenities` | Multiple select | Options: restrooms, shade, parking, dog-friendly, water-fountain, picnic-area |
-| `accessibility` | Multiple select | Options: wheelchair, stroller |
+| `ageRanges` | Multiple select | baby, toddler, preschool, elementary, tween |
+| `weather` | Multiple select | sunny, rainy, snowy, cold |
+| `amenities` | Multiple select | restrooms, changing-tables, parking, dog-friendly |
+| `accessibility` | Multiple select | wheelchair, stroller |
 
 ### Media & Featured
 
@@ -71,54 +71,55 @@ Set up the following fields in your Listings table:
 
 ### Category-Specific Fields
 
-#### Play Activities
+#### Play
 | Field Name | Type | Notes |
 |------------|------|-------|
-| `playType` | Single select | playground, indoor-play, sports, splash-pad, arcade |
+| `playType` | Single select | playground, arcade, open-space, ice-rink, pool, snow-sports, aerial, bowling, gardens |
 | `setting` | Single select | indoor, outdoor, both |
 | `hasFencedArea` | Checkbox | |
-| `ageGroupSections` | Long text | Comma-separated |
-| `playFeatures` | Long text | Comma-separated |
+| `shadeCoverage` | Single select | none, partial, full |
+| `hasWaterFountain` | Checkbox | |
+| `hasPicnicTable` | Checkbox | |
+| `playFeatures` | Multiple select | court, field, splash-pad, skate-park, disc-golf, ice-rink, pool, golf, bike-course, sledding, downhill-skiing, snowboarding, cross-country-skiing |
 
-#### Hike Activities
+#### Hike
 | Field Name | Type | Notes |
 |------------|------|-------|
 | `difficulty` | Single select | easy, moderate, hard |
 | `distance` | Single line text | e.g., "2.5 miles" |
 | `elevationGain` | Single line text | e.g., "500 ft" |
 | `surface` | Single select | paved, gravel, dirt, mixed |
-| `isLoop` | Checkbox | |
+| `hasPicnicTable` | Checkbox | |
+| `hasWaterFountain` | Checkbox | |
+| `hikeType` | Single select | loop, out-and-back |
 | `trailheadParking` | Long text | |
-| `bestSeason` | Multiple select | |
-| `hikeFeatures` | Long text | Comma-separated |
+| `bestSeason` | Multiple select | spring, summer, fall, winter |
+| `hikeFeatures` | Multiple select | view, waterfall, lake, pond, wildlife, rock-formations |
 | `shadeCoverage` | Single select | none, partial, full |
 | `duration` | Single line text | e.g., "1-2 hours" |
 
-#### Eat Activities
+#### Eat
 | Field Name | Type | Notes |
 |------------|------|-------|
 | `cuisine` | Single line text | e.g., "American", "Mexican" |
-| `mealTypes` | Multiple select | breakfast, lunch, dinner, brunch |
-| `eatFeatures` | Multiple select | kids-menu, highchairs, outdoor-seating, quick-service, reservations, entertainment |
-| `averageMealTime` | Single line text | |
+| `mealTypes` | Multiple select | breakfast, lunch, dinner, brunch, drinks, bakery, cafe, happy-hour |
+| `eatFeatures` | Multiple select | kids-menu, high-chairs, outdoor-seating, coloring, play-area, quick-service, reservations, entertainment |
 | `noiseLevel` | Single select | quiet, moderate, loud |
-| `changingTables` | Checkbox | |
 
-#### Explore Activities
+#### Learn
 | Field Name | Type | Notes |
 |------------|------|-------|
-| `exploreType` | Single select | museum, nature, attraction, historic-site, adventure |
+| `learnType` | Single select | museum, nature, attraction, historic-site, zoo, national-monument, national-park, observatory |
+| `setting` | Single select | indoor, outdoor, both |
 | `admissionRequired` | Checkbox | |
 | `advanceBooking` | Checkbox | |
-| `exploreFeatures` | Long text | Comma-separated |
+| `learnFeatures` | Multiple select | activities, exhibits, scenic, tours, demonstrations, gift-shop, cafe, restaurant, workshops, wildlife |
 
-#### Shop Activities
+#### Shop
 | Field Name | Type | Notes |
 |------------|------|-------|
-| `shopType` | Single select | toys, books, clothing, resale, general |
-| `hasPlayArea` | Checkbox | |
-| `kidsFocused` | Checkbox | |
-| `shopFeatures` | Long text | Comma-separated |
+| `shopType` | Single select | toys, books, clothing, general, outdoor-market, boutique |
+| `shopFeatures` | Multiple select | educational, activities, demonstrations, story-time, art, board-games, souvenirs, outdoor-gear |
 
 ## Step 3: Create Helpful Views
 
@@ -128,7 +129,7 @@ Create these views for easier management:
 2. **Play Listings** - Filter: category = "play"
 3. **Hike Listings** - Filter: category = "hike"
 4. **Eat Listings** - Filter: category = "eat"
-5. **Explore Listings** - Filter: category = "explore"
+5. **Learn Listings** - Filter: category = "learn"
 6. **Shop Listings** - Filter: category = "shop"
 7. **Top Picks** - Filter: isTopPick = true
 8. **Drafts** - Filter: status = "Draft"

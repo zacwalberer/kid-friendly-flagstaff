@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { MapPin, Trees, Tent, Footprints, UtensilsCrossed, Telescope, ShoppingBag } from 'lucide-react'
+import { MapPin, Trees, Tent, Footprints, UtensilsCrossed, GraduationCap, ShoppingBag } from 'lucide-react'
 import { fadeIn, slideUp } from '@/lib/animations'
 
 export function Hero() {
@@ -88,8 +88,8 @@ export function Hero() {
               <span>Restaurants</span>
             </div>
             <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[var(--cream-100)] border border-[var(--cream-300)] text-[var(--forest-700)]">
-              <Telescope className="h-4 w-4 text-[var(--category-explore)]" />
-              <span>Attractions</span>
+              <GraduationCap className="h-4 w-4 text-[var(--category-learn)]" />
+              <span>Learning</span>
             </div>
             <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-[var(--cream-100)] border border-[var(--cream-300)] text-[var(--forest-700)]">
               <ShoppingBag className="h-4 w-4 text-[var(--category-shop)]" />

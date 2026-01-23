@@ -1,4 +1,19 @@
-import type { AgeRange, Weather, Amenity, Difficulty, Surface, MealType, EatFeature, Accessibility, Setting, ShadeCoverage } from './activity'
+import type {
+  AgeRange,
+  Weather,
+  Amenity,
+  Difficulty,
+  Surface,
+  MealType,
+  EatFeature,
+  Accessibility,
+  Setting,
+  ShadeCoverage,
+  HikeType,
+  PlayFeature,
+  LearnFeature,
+  ShopFeature,
+} from './activity'
 
 export interface BaseFilterState {
   ageRanges: AgeRange[]
@@ -11,7 +26,7 @@ export interface BaseFilterState {
 export interface HikeFilterState extends BaseFilterState {
   difficulty: Difficulty[]
   surface: Surface[]
-  isLoop: boolean | null
+  hikeType: HikeType | null
   shadeCoverage: ShadeCoverage | null
 }
 
@@ -23,15 +38,18 @@ export interface EatFilterState extends BaseFilterState {
 export interface PlayFilterState extends BaseFilterState {
   hasFencedArea: boolean | null
   setting: Setting | null
+  shadeCoverage: ShadeCoverage | null
+  features: PlayFeature[]
 }
 
-export interface ExploreFilterState extends BaseFilterState {
+export interface LearnFilterState extends BaseFilterState {
   admissionRequired: boolean | null
   setting: Setting | null
+  features: LearnFeature[]
 }
 
 export interface ShopFilterState extends BaseFilterState {
-  kidsFocused: boolean | null
+  features: ShopFeature[]
 }
 
 export type FilterState =
@@ -39,7 +57,7 @@ export type FilterState =
   | HikeFilterState
   | EatFilterState
   | PlayFilterState
-  | ExploreFilterState
+  | LearnFilterState
   | ShopFilterState
 
 export type FilterAction =
@@ -56,7 +74,7 @@ export type FilterAction =
   | { type: 'TOGGLE_DIFFICULTY'; payload: Difficulty }
   | { type: 'SET_SURFACE'; payload: Surface[] }
   | { type: 'TOGGLE_SURFACE'; payload: Surface }
-  | { type: 'SET_IS_LOOP'; payload: boolean | null }
+  | { type: 'SET_HIKE_TYPE'; payload: HikeType | null }
   | { type: 'SET_SHADE_COVERAGE'; payload: ShadeCoverage | null }
   | { type: 'SET_MEAL_TYPES'; payload: MealType[] }
   | { type: 'TOGGLE_MEAL_TYPE'; payload: MealType }
@@ -65,7 +83,12 @@ export type FilterAction =
   | { type: 'SET_FENCED_AREA'; payload: boolean | null }
   | { type: 'SET_SETTING'; payload: Setting | null }
   | { type: 'SET_ADMISSION_REQUIRED'; payload: boolean | null }
-  | { type: 'SET_KIDS_FOCUSED'; payload: boolean | null }
+  | { type: 'SET_PLAY_FEATURES'; payload: PlayFeature[] }
+  | { type: 'TOGGLE_PLAY_FEATURE'; payload: PlayFeature }
+  | { type: 'SET_LEARN_FEATURES'; payload: LearnFeature[] }
+  | { type: 'TOGGLE_LEARN_FEATURE'; payload: LearnFeature }
+  | { type: 'SET_SHOP_FEATURES'; payload: ShopFeature[] }
+  | { type: 'TOGGLE_SHOP_FEATURE'; payload: ShopFeature }
   | { type: 'RESET_FILTERS' }
 
 export interface FilterConfig {

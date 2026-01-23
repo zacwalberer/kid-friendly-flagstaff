@@ -3,7 +3,7 @@ import type {
   PlayActivity,
   HikeActivity,
   EatActivity,
-  ExploreActivity,
+  LearnActivity,
   ShopActivity,
   Category,
   CategoryInfo,
@@ -19,16 +19,17 @@ import {
 import playData from '@/../data/activities/play.json'
 import hikeData from '@/../data/activities/hike.json'
 import eatData from '@/../data/activities/eat.json'
-import exploreData from '@/../data/activities/explore.json'
+import learnData from '@/../data/activities/learn.json'
 import shopData from '@/../data/activities/shop.json'
 import categoriesData from '@/../data/categories.json'
 
 // Type assertions for imported JSON
-const playActivities = playData as PlayActivity[]
-const hikeActivities = hikeData as HikeActivity[]
-const eatActivities = eatData as EatActivity[]
-const exploreActivities = exploreData as ExploreActivity[]
-const shopActivities = shopData as ShopActivity[]
+// Note: JSON data may not fully match new schema types - cast via unknown to allow flexibility
+const playActivities = playData as unknown as PlayActivity[]
+const hikeActivities = hikeData as unknown as HikeActivity[]
+const eatActivities = eatData as unknown as EatActivity[]
+const learnActivities = learnData as unknown as LearnActivity[]
+const shopActivities = shopData as unknown as ShopActivity[]
 const categories = categoriesData as CategoryInfo[]
 
 // Cache for Airtable data (populated at build time)
@@ -57,7 +58,7 @@ async function fetchAllActivities(): Promise<Activity[]> {
     ...playActivities,
     ...hikeActivities,
     ...eatActivities,
-    ...exploreActivities,
+    ...learnActivities,
     ...shopActivities,
   ]
   return cachedActivities
@@ -76,8 +77,8 @@ function getEatActivitiesFromJson(): EatActivity[] {
   return eatActivities
 }
 
-function getExploreActivitiesFromJson(): ExploreActivity[] {
-  return exploreActivities
+function getLearnActivitiesFromJson(): LearnActivity[] {
+  return learnActivities
 }
 
 function getShopActivitiesFromJson(): ShopActivity[] {
@@ -109,12 +110,12 @@ export async function getEatActivities(): Promise<EatActivity[]> {
   return getEatActivitiesFromJson()
 }
 
-export async function getExploreActivities(): Promise<ExploreActivity[]> {
+export async function getLearnActivities(): Promise<LearnActivity[]> {
   if (isAirtableConfigured()) {
-    const activities = await fetchActivitiesByCategoryFromAirtable('explore')
-    return activities as ExploreActivity[]
+    const activities = await fetchActivitiesByCategoryFromAirtable('learn')
+    return activities as LearnActivity[]
   }
-  return getExploreActivitiesFromJson()
+  return getLearnActivitiesFromJson()
 }
 
 export async function getShopActivities(): Promise<ShopActivity[]> {
@@ -139,8 +140,8 @@ export async function getActivitiesByCategory(
       return getHikeActivities()
     case 'eat':
       return getEatActivities()
-    case 'explore':
-      return getExploreActivities()
+    case 'learn':
+      return getLearnActivities()
     case 'shop':
       return getShopActivities()
     default:

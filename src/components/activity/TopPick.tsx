@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Star, ArrowRight, Tent, Footprints, UtensilsCrossed, Telescope, ShoppingBag, type LucideIcon } from 'lucide-react'
+import { Star, ArrowRight, Tent, Footprints, UtensilsCrossed, GraduationCap, ShoppingBag, type LucideIcon } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -19,7 +19,7 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   play: Tent,
   hike: Footprints,
   eat: UtensilsCrossed,
-  explore: Telescope,
+  learn: GraduationCap,
   shop: ShoppingBag,
 }
 

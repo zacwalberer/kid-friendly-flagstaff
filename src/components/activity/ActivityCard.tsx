@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { MapPin, DollarSign, Star, Tent, Footprints, UtensilsCrossed, Telescope, ShoppingBag, type LucideIcon } from 'lucide-react'
+import { MapPin, DollarSign, Star, Tent, Footprints, UtensilsCrossed, GraduationCap, ShoppingBag, type LucideIcon } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { KidFriendlinessScore } from '@/components/shared/KidFriendlinessScore'
@@ -20,7 +20,7 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   play: Tent,
   hike: Footprints,
   eat: UtensilsCrossed,
-  explore: Telescope,
+  learn: GraduationCap,
   shop: ShoppingBag,
 }
 
@@ -28,7 +28,7 @@ const CATEGORY_GRADIENTS: Record<string, string> = {
   play: 'gradient-play',
   hike: 'gradient-hike',
   eat: 'gradient-eat',
-  explore: 'gradient-explore',
+  learn: 'gradient-learn',
   shop: 'gradient-shop',
 }
 

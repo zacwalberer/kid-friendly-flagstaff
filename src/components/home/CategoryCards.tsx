@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowRight, Tent, Footprints, UtensilsCrossed, Telescope, ShoppingBag, type LucideIcon } from 'lucide-react'
+import { ArrowRight, Tent, Footprints, UtensilsCrossed, GraduationCap, ShoppingBag, type LucideIcon } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { staggerContainer, staggerItem, cardHover } from '@/lib/animations'
 import { CATEGORY_INFO } from '@/utils/constants'
@@ -11,7 +11,7 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   play: Tent,
   hike: Footprints,
   eat: UtensilsCrossed,
-  explore: Telescope,
+  learn: GraduationCap,
   shop: ShoppingBag,
 }
 
@@ -19,7 +19,7 @@ const CATEGORY_GRADIENTS: Record<string, string> = {
   play: 'gradient-play',
   hike: 'gradient-hike',
   eat: 'gradient-eat',
-  explore: 'gradient-explore',
+  learn: 'gradient-learn',
   shop: 'gradient-shop',
 }
 

@@ -3,7 +3,7 @@ import {
   isEatActivity,
   isHikeActivity,
   isPlayActivity,
-  isExploreActivity,
+  isLearnActivity,
   isShopActivity,
 } from '@/types'
 
@@ -149,8 +149,8 @@ export function ActivityJsonLd({ activity }: { activity: Activity }) {
     return <JsonLd data={data} />
   }
 
-  // TouristAttraction schema for explore category
-  if (isExploreActivity(activity)) {
+  // TouristAttraction schema for learn category
+  if (isLearnActivity(activity)) {
     const data = {
       ...baseData,
       '@type': 'TouristAttraction',

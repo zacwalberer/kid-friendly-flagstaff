@@ -99,7 +99,7 @@
   --category-play: oklch(0.68 0.18 350);
   --category-hike: oklch(0.52 0.14 145);
   --category-eat: oklch(0.70 0.16 50);
-  --category-explore: oklch(0.58 0.12 240);
+  --category-learn: oklch(0.58 0.12 240);
   --category-shop: oklch(0.55 0.16 300);
 
   /* ======================= */
@@ -129,7 +129,7 @@
   --chart-1: var(--forest-500);
   --chart-2: var(--bark-400);
   --chart-3: var(--aspen-400);
-  --chart-4: var(--category-explore);
+  --chart-4: var(--category-learn);
   --chart-5: var(--category-play);
 
   /* Sidebar */
@@ -277,8 +277,8 @@
     background-color: var(--category-eat);
   }
 
-  .bg-category-explore {
-    background-color: var(--category-explore);
+  .bg-category-learn {
+    background-color: var(--category-learn);
   }
 
   .bg-category-shop {
@@ -298,8 +298,8 @@
     background: linear-gradient(135deg, var(--category-eat), oklch(0.62 0.18 45));
   }
 
-  .gradient-explore {
-    background: linear-gradient(135deg, var(--category-explore), oklch(0.50 0.14 250));
+  .gradient-learn {
+    background: linear-gradient(135deg, var(--category-learn), oklch(0.50 0.14 250));
   }
 
   .gradient-shop {

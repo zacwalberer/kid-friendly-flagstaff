@@ -10,7 +10,7 @@ import {
   filterHikeActivities,
   filterEatActivities,
   filterPlayActivities,
-  filterExploreActivities,
+  filterLearnActivities,
   filterShopActivities,
 } from '@/utils/filterActivities'
 import {
@@ -18,11 +18,11 @@ import {
   initialHikeFilterState,
   initialEatFilterState,
   initialPlayFilterState,
-  initialExploreFilterState,
+  initialLearnFilterState,
   initialShopFilterState,
 } from '@/hooks/useFilters'
-import type { Activity, CategoryInfo, HikeActivity, EatActivity, PlayActivity, ExploreActivity, ShopActivity } from '@/types'
-import type { BaseFilterState, HikeFilterState, EatFilterState, PlayFilterState, ExploreFilterState, ShopFilterState } from '@/types/filters'
+import type { Activity, CategoryInfo, HikeActivity, EatActivity, PlayActivity, LearnActivity, ShopActivity } from '@/types'
+import type { BaseFilterState, HikeFilterState, EatFilterState, PlayFilterState, LearnFilterState, ShopFilterState } from '@/types/filters'
 
 interface CategoryPageClientProps {
   category: CategoryInfo
@@ -44,8 +44,8 @@ export function CategoryPageClient({
         return initialEatFilterState
       case 'play':
         return initialPlayFilterState
-      case 'explore':
-        return initialExploreFilterState
+      case 'learn':
+        return initialLearnFilterState
       case 'shop':
         return initialShopFilterState
       default:
@@ -54,7 +54,7 @@ export function CategoryPageClient({
   }
 
   const [filters, setFilters] = useState<
-    BaseFilterState | HikeFilterState | EatFilterState | PlayFilterState | ExploreFilterState | ShopFilterState
+    BaseFilterState | HikeFilterState | EatFilterState | PlayFilterState | LearnFilterState | ShopFilterState
   >(getInitialFilters())
 
   const handleFilterChange = (newFilters: typeof filters) => {
@@ -74,8 +74,8 @@ export function CategoryPageClient({
         return filterEatActivities(activities as EatActivity[], filters as EatFilterState)
       case 'play':
         return filterPlayActivities(activities as PlayActivity[], filters as PlayFilterState)
-      case 'explore':
-        return filterExploreActivities(activities as ExploreActivity[], filters as ExploreFilterState)
+      case 'learn':
+        return filterLearnActivities(activities as LearnActivity[], filters as LearnFilterState)
       case 'shop':
         return filterShopActivities(activities as ShopActivity[], filters as ShopFilterState)
       default:

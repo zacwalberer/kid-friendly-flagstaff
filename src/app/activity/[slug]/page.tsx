@@ -43,7 +43,7 @@ const categoryNames: Record<string, string> = {
   play: 'Play',
   hike: 'Hike',
   eat: 'Eat',
-  explore: 'Explore',
+  learn: 'Learn',
   shop: 'Shop',
 }
 

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Menu, Home, Tent, Footprints, UtensilsCrossed, Telescope, ShoppingBag, Trees, type LucideIcon } from 'lucide-react'
+import { Menu, Home, Tent, Footprints, UtensilsCrossed, GraduationCap, ShoppingBag, Trees, type LucideIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   Sheet,
@@ -22,7 +22,7 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   play: Tent,
   hike: Footprints,
   eat: UtensilsCrossed,
-  explore: Telescope,
+  learn: GraduationCap,
   shop: ShoppingBag,
 }
 

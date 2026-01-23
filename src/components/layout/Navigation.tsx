@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Tent, Footprints, UtensilsCrossed, Telescope, ShoppingBag, type LucideIcon } from 'lucide-react'
+import { Tent, Footprints, UtensilsCrossed, GraduationCap, ShoppingBag, type LucideIcon } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { CATEGORY_INFO } from '@/utils/constants'
 
@@ -13,7 +13,7 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   play: Tent,
   hike: Footprints,
   eat: UtensilsCrossed,
-  explore: Telescope,
+  learn: GraduationCap,
   shop: ShoppingBag,
 }
 

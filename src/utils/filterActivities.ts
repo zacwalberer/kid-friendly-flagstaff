@@ -3,7 +3,7 @@ import type {
   HikeActivity,
   EatActivity,
   PlayActivity,
-  ExploreActivity,
+  LearnActivity,
   ShopActivity,
 } from '@/types/activity'
 import type {
@@ -11,7 +11,7 @@ import type {
   HikeFilterState,
   EatFilterState,
   PlayFilterState,
-  ExploreFilterState,
+  LearnFilterState,
   ShopFilterState,
 } from '@/types/filters'
 
@@ -85,8 +85,8 @@ export function filterHikeActivities(
       return false
     }
 
-    // Loop filter
-    if (filters.isLoop !== null && activity.isLoop !== filters.isLoop) {
+    // Hike type filter
+    if (filters.hikeType !== null && activity.hikeType !== filters.hikeType) {
       return false
     }
 
@@ -143,14 +143,26 @@ export function filterPlayActivities(
       }
     }
 
+    // Shade coverage filter
+    if (filters.shadeCoverage !== null && activity.shadeCoverage !== filters.shadeCoverage) {
+      return false
+    }
+
+    // Features filter
+    if (filters.features.length > 0) {
+      const activityFeatures = activity.features || []
+      const hasAllFeatures = filters.features.every((f) => activityFeatures.includes(f))
+      if (!hasAllFeatures) return false
+    }
+
     return true
   })
 }
 
-export function filterExploreActivities(
-  activities: ExploreActivity[],
-  filters: ExploreFilterState
-): ExploreActivity[] {
+export function filterLearnActivities(
+  activities: LearnActivity[],
+  filters: LearnFilterState
+): LearnActivity[] {
   return activities.filter((activity) => {
     if (!matchesBaseFilters(activity, filters)) return false
 
@@ -171,6 +183,13 @@ export function filterExploreActivities(
       }
     }
 
+    // Features filter
+    if (filters.features.length > 0) {
+      const activityFeatures = activity.features || []
+      const hasAllFeatures = filters.features.every((f) => activityFeatures.includes(f))
+      if (!hasAllFeatures) return false
+    }
+
     return true
   })
 }
@@ -182,9 +201,11 @@ export function filterShopActivities(
   return activities.filter((activity) => {
     if (!matchesBaseFilters(activity, filters)) return false
 
-    // Kids focused filter
-    if (filters.kidsFocused !== null && activity.kidsFocused !== filters.kidsFocused) {
-      return false
+    // Features filter
+    if (filters.features.length > 0) {
+      const activityFeatures = activity.features || []
+      const hasAllFeatures = filters.features.every((f) => activityFeatures.includes(f))
+      if (!hasAllFeatures) return false
     }
 
     return true

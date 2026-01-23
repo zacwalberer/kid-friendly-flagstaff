@@ -25,13 +25,13 @@ import { filterPanelVariants } from '@/lib/animations'
 import { countActiveFilters } from '@/utils/filterActivities'
 import { cn } from '@/lib/utils'
 import { SETTING_LABELS, ALL_SETTINGS } from '@/utils/constants'
-import type { Category, AgeRange, Weather, Amenity, Difficulty, Surface, MealType, EatFeature, Accessibility, Setting, ShadeCoverage } from '@/types'
-import type { BaseFilterState, HikeFilterState, EatFilterState, PlayFilterState, ExploreFilterState } from '@/types/filters'
+import type { Category, AgeRange, Weather, Amenity, Difficulty, Surface, MealType, EatFeature, Accessibility, Setting, ShadeCoverage, HikeType } from '@/types'
+import type { BaseFilterState, HikeFilterState, EatFilterState, PlayFilterState, LearnFilterState } from '@/types/filters'
 
 interface FilterPanelProps {
   category: Category
-  filters: BaseFilterState | HikeFilterState | EatFilterState | PlayFilterState | ExploreFilterState
-  onFilterChange: (filters: BaseFilterState | HikeFilterState | EatFilterState | PlayFilterState | ExploreFilterState) => void
+  filters: BaseFilterState | HikeFilterState | EatFilterState | PlayFilterState | LearnFilterState
+  onFilterChange: (filters: BaseFilterState | HikeFilterState | EatFilterState | PlayFilterState | LearnFilterState) => void
   onReset: () => void
 }
 
@@ -96,9 +96,9 @@ export function FilterPanel({
     onFilterChange({ ...hikeFilters, surface: newSurface })
   }
 
-  const handleIsLoopChange = (value: boolean | null) => {
+  const handleHikeTypeChange = (value: HikeType | null) => {
     if (category !== 'hike') return
-    onFilterChange({ ...(filters as HikeFilterState), isLoop: value })
+    onFilterChange({ ...(filters as HikeFilterState), hikeType: value })
   }
 
   const handleShadeCoverageChange = (value: ShadeCoverage | null) => {
@@ -106,12 +106,12 @@ export function FilterPanel({
     onFilterChange({ ...(filters as HikeFilterState), shadeCoverage: value })
   }
 
-  // Play/Explore-specific handlers
+  // Play/Learn-specific handlers
   const handleSettingChange = (value: Setting | null) => {
     if (category === 'play') {
       onFilterChange({ ...(filters as PlayFilterState), setting: value })
-    } else if (category === 'explore') {
-      onFilterChange({ ...(filters as ExploreFilterState), setting: value })
+    } else if (category === 'learn') {
+      onFilterChange({ ...(filters as LearnFilterState), setting: value })
     }
   }
 
@@ -178,11 +178,11 @@ export function FilterPanel({
           <HikeFilters
             selectedDifficulty={(filters as HikeFilterState).difficulty}
             selectedSurface={(filters as HikeFilterState).surface}
-            isLoop={(filters as HikeFilterState).isLoop}
+            hikeType={(filters as HikeFilterState).hikeType}
             shadeCoverage={(filters as HikeFilterState).shadeCoverage}
             onToggleDifficulty={handleDifficultyToggle}
             onToggleSurface={handleSurfaceToggle}
-            onSetIsLoop={handleIsLoopChange}
+            onSetHikeType={handleHikeTypeChange}
             onSetShadeCoverage={handleShadeCoverageChange}
           />
         </>
@@ -200,7 +200,7 @@ export function FilterPanel({
         </>
       )}
 
-      {(category === 'play' || category === 'explore') && (
+      {(category === 'play' || category === 'learn') && (
         <>
           <Separator className="bg-[var(--cream-300)]" />
           <div className="space-y-2">
@@ -209,7 +209,7 @@ export function FilterPanel({
               {ALL_SETTINGS.map((setting) => {
                 const currentSetting = category === 'play'
                   ? (filters as PlayFilterState).setting
-                  : (filters as ExploreFilterState).setting
+                  : (filters as LearnFilterState).setting
                 const isSelected = currentSetting === setting
                 return (
                   <button
