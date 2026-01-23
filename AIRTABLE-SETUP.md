@@ -5,7 +5,7 @@ This guide walks through setting up Airtable as the CMS for managing Kid Friendl
 ## Quick Start
 
 1. Create an Airtable account at [airtable.com](https://airtable.com)
-2. Create a new base with an "Activities" table
+2. Create a new base with a "Listings" table
 3. Configure fields (see schema below)
 4. Create an API token
 5. Add environment variables
@@ -15,11 +15,11 @@ This guide walks through setting up Airtable as the CMS for managing Kid Friendl
 
 1. Log into Airtable and click "Create a base"
 2. Name it "Kid Friendly Flagstaff"
-3. Rename the default table to "Activities"
+3. Rename the default table to "Listings"
 
 ## Step 2: Configure Table Fields
 
-Set up the following fields in your Activities table:
+Set up the following fields in your Listings table:
 
 ### Core Fields (Required)
 
@@ -161,7 +161,7 @@ Create `.env.local` in your project root:
 ```bash
 AIRTABLE_API_KEY=pat_your_token_here
 AIRTABLE_BASE_ID=appYourBaseIdHere
-AIRTABLE_TABLE_NAME=Activities
+AIRTABLE_TABLE_NAME=Listings
 ```
 
 **Finding your Base ID:**

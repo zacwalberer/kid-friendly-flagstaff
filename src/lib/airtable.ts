@@ -238,7 +238,7 @@ function transformRecord(
 // Fetch all activities from Airtable
 export async function fetchActivitiesFromAirtable(): Promise<Activity[]> {
   const base = getAirtableBase()
-  const tableName = process.env.AIRTABLE_TABLE_NAME || 'Activities'
+  const tableName = process.env.AIRTABLE_TABLE_NAME || 'Listings'
 
   const activities: Activity[] = []
 
@@ -283,7 +283,7 @@ export async function fetchActivitiesByCategoryFromAirtable(
   category: Category
 ): Promise<Activity[]> {
   const base = getAirtableBase()
-  const tableName = process.env.AIRTABLE_TABLE_NAME || 'Activities'
+  const tableName = process.env.AIRTABLE_TABLE_NAME || 'Listings'
 
   const activities: Activity[] = []
 
