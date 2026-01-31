@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { filterActivities, countActiveFilters } from '@/utils/filterActivities'
-import type { PlayActivity } from '@/types'
+import { filterListings, countActiveFilters } from '@/utils/filterListings'
+import type { PlayListing } from '@/types'
 import type { BaseFilterState } from '@/types/filters'
 
-const mockActivity: PlayActivity = {
+const mockListing: PlayListing = {
   id: 'test-1',
   slug: 'test-park',
   name: 'Test Park',
@@ -14,7 +14,7 @@ const mockActivity: PlayActivity = {
   kidFriendlinessScore: 5,
   ageRanges: ['toddler', 'preschool', 'elementary'],
   weather: ['sunny', 'cold'],
-  amenities: ['restrooms', 'parking', 'shade'],
+  amenities: ['restrooms', 'parking'],
   images: [],
   lastUpdated: '2024-01-01',
   playType: 'playground',
@@ -29,80 +29,80 @@ const emptyFilters: BaseFilterState = {
   searchQuery: '',
 }
 
-describe('filterActivities', () => {
-  it('returns all activities when no filters are applied', () => {
-    const activities = [mockActivity]
-    const result = filterActivities(activities, emptyFilters)
+describe('filterListings', () => {
+  it('returns all listings when no filters are applied', () => {
+    const listings = [mockListing]
+    const result = filterListings(listings, emptyFilters)
     expect(result).toHaveLength(1)
   })
 
   it('filters by age range', () => {
-    const activities = [mockActivity]
+    const listings = [mockListing]
     const filters: BaseFilterState = {
       ...emptyFilters,
       ageRanges: ['toddler'],
     }
-    const result = filterActivities(activities, filters)
+    const result = filterListings(listings, filters)
     expect(result).toHaveLength(1)
   })
 
-  it('excludes activities that do not match age range', () => {
-    const activities = [mockActivity]
+  it('excludes listings that do not match age range', () => {
+    const listings = [mockListing]
     const filters: BaseFilterState = {
       ...emptyFilters,
-      ageRanges: ['baby'], // mockActivity doesn't have 'baby'
+      ageRanges: ['baby'], // mockListing doesn't have 'baby'
     }
-    const result = filterActivities(activities, filters)
+    const result = filterListings(listings, filters)
     expect(result).toHaveLength(0)
   })
 
   it('filters by weather', () => {
-    const activities = [mockActivity]
+    const listings = [mockListing]
     const filters: BaseFilterState = {
       ...emptyFilters,
       weather: ['sunny'],
     }
-    const result = filterActivities(activities, filters)
+    const result = filterListings(listings, filters)
     expect(result).toHaveLength(1)
   })
 
   it('filters by amenities - must have ALL selected amenities', () => {
-    const activities = [mockActivity]
+    const listings = [mockListing]
     const filters: BaseFilterState = {
       ...emptyFilters,
       amenities: ['restrooms', 'parking'],
     }
-    const result = filterActivities(activities, filters)
+    const result = filterListings(listings, filters)
     expect(result).toHaveLength(1)
   })
 
-  it('excludes activities missing required amenities', () => {
-    const activities = [mockActivity]
+  it('excludes listings missing required amenities', () => {
+    const listings = [mockListing]
     const filters: BaseFilterState = {
       ...emptyFilters,
-      amenities: ['dog-friendly'], // mockActivity doesn't have this
+      amenities: ['dog-friendly'], // mockListing doesn't have this
     }
-    const result = filterActivities(activities, filters)
+    const result = filterListings(listings, filters)
     expect(result).toHaveLength(0)
   })
 
   it('filters by search query', () => {
-    const activities = [mockActivity]
+    const listings = [mockListing]
     const filters: BaseFilterState = {
       ...emptyFilters,
       searchQuery: 'Test',
     }
-    const result = filterActivities(activities, filters)
+    const result = filterListings(listings, filters)
     expect(result).toHaveLength(1)
   })
 
   it('search query is case insensitive', () => {
-    const activities = [mockActivity]
+    const listings = [mockListing]
     const filters: BaseFilterState = {
       ...emptyFilters,
       searchQuery: 'test',
     }
-    const result = filterActivities(activities, filters)
+    const result = filterListings(listings, filters)
     expect(result).toHaveLength(1)
   })
 })

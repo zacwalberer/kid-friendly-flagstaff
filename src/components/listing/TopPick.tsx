@@ -9,10 +9,10 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { KidFriendlinessScore } from '@/components/shared/KidFriendlinessScore'
 import { slideUp } from '@/lib/animations'
-import type { Activity } from '@/types'
+import type { Listing } from '@/types'
 
 interface TopPickProps {
-  activity: Activity
+  listing: Listing
 }
 
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
@@ -23,8 +23,8 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   shop: ShoppingBag,
 }
 
-export function TopPick({ activity }: TopPickProps) {
-  const Icon = CATEGORY_ICONS[activity.category]
+export function TopPick({ listing }: TopPickProps) {
+  const Icon = CATEGORY_ICONS[listing.category]
 
   return (
     <motion.div
@@ -38,10 +38,10 @@ export function TopPick({ activity }: TopPickProps) {
           <div className="flex flex-col md:flex-row">
             {/* Image */}
             <div className="relative w-full md:w-1/3 aspect-video md:aspect-auto min-h-[200px]">
-              {activity.images[0] ? (
+              {listing.images[0] ? (
                 <Image
-                  src={activity.images[0]}
-                  alt={activity.name}
+                  src={listing.images[0]}
+                  alt={listing.name}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 33vw"
@@ -65,25 +65,25 @@ export function TopPick({ activity }: TopPickProps) {
             <div className="flex-1 p-6">
               <div className="flex items-start justify-between mb-3">
                 <h3 className="text-2xl font-display font-bold text-[var(--forest-800)]">
-                  {activity.name}
+                  {listing.name}
                 </h3>
-                <KidFriendlinessScore score={activity.kidFriendlinessScore} />
+                <KidFriendlinessScore score={listing.kidFriendlinessScore} />
               </div>
 
               <p className="text-[var(--forest-600)] mb-4 leading-relaxed">
-                {activity.shortDescription}
+                {listing.shortDescription}
               </p>
 
-              {activity.topPickReason && (
+              {listing.topPickReason && (
                 <div className="bg-[var(--aspen-300)]/50 border border-[var(--aspen-400)] text-[var(--forest-800)] p-4 rounded-lg mb-4">
                   <p className="text-sm">
                     <strong className="font-display">Why we love it:</strong>{' '}
-                    {activity.topPickReason}
+                    {listing.topPickReason}
                   </p>
                 </div>
               )}
 
-              <Link href={`/activity/${activity.slug}`}>
+              <Link href={`/listing/${listing.slug}`}>
                 <Button className="bg-[var(--forest-500)] hover:bg-[var(--forest-600)] text-white font-display shadow-forest-sm hover:shadow-forest-md transition-all">
                   Learn More
                   <ArrowRight className="h-4 w-4 ml-2" />

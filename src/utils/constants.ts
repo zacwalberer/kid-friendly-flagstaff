@@ -116,7 +116,7 @@ export const DIFFICULTY_COLORS: Record<Difficulty, string> = {
 export const SURFACE_LABELS: Record<Surface, string> = {
   paved: 'Paved',
   gravel: 'Gravel',
-  dirt: 'Dirt',
+  rocky: 'Rocky',
   mixed: 'Mixed',
 }
 
@@ -302,7 +302,7 @@ export const ALL_SETTINGS: Setting[] = ['indoor', 'outdoor', 'both']
 export const ALL_SHADE_COVERAGES: ShadeCoverage[] = ['none', 'partial', 'full']
 export const ALL_PRICE_RANGES: PriceRange[] = ['free', '$', '$$', '$$$']
 export const ALL_DIFFICULTIES: Difficulty[] = ['easy', 'moderate', 'hard']
-export const ALL_SURFACES: Surface[] = ['paved', 'gravel', 'dirt', 'mixed']
+export const ALL_SURFACES: Surface[] = ['paved', 'gravel', 'rocky', 'mixed']
 export const ALL_HIKE_TYPES: HikeType[] = ['loop', 'out-and-back']
 export const ALL_HIKE_FEATURES: HikeFeature[] = ['view', 'waterfall', 'lake', 'pond', 'wildlife', 'rock-formations']
 export const ALL_MEAL_TYPES: MealType[] = ['breakfast', 'lunch', 'dinner', 'brunch', 'drinks', 'bakery', 'cafe', 'happy-hour']

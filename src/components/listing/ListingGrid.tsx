@@ -1,20 +1,20 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ActivityCard } from './ActivityCard'
+import { ListingCard } from './ListingCard'
 import { staggerContainer } from '@/lib/animations'
-import type { Activity } from '@/types'
+import type { Listing } from '@/types'
 
-interface ActivityGridProps {
-  activities: Activity[]
+interface ListingGridProps {
+  listings: Listing[]
   emptyMessage?: string
 }
 
-export function ActivityGrid({
-  activities,
-  emptyMessage = 'No activities found matching your filters.',
-}: ActivityGridProps) {
-  if (activities.length === 0) {
+export function ListingGrid({
+  listings,
+  emptyMessage = 'No listings found matching your filters.',
+}: ListingGridProps) {
+  if (listings.length === 0) {
     return (
       <div className="text-center py-12">
         <p className="text-muted-foreground">{emptyMessage}</p>
@@ -29,8 +29,8 @@ export function ActivityGrid({
       animate="visible"
       className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
     >
-      {activities.map((activity) => (
-        <ActivityCard key={activity.id} activity={activity} />
+      {listings.map((listing) => (
+        <ListingCard key={listing.id} listing={listing} />
       ))}
     </motion.div>
   )

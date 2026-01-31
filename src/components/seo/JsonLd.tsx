@@ -1,10 +1,10 @@
 import {
-  Activity,
-  isEatActivity,
-  isHikeActivity,
-  isPlayActivity,
-  isLearnActivity,
-  isShopActivity,
+  Listing,
+  isEatListing,
+  isHikeListing,
+  isPlayListing,
+  isLearnListing,
+  isShopListing,
 } from '@/types'
 
 interface JsonLdProps {
@@ -81,46 +81,46 @@ function getGeoSchema(coordinates?: { lat: number; lng: number }) {
   }
 }
 
-export function ActivityJsonLd({ activity }: { activity: Activity }) {
+export function ListingJsonLd({ listing }: { listing: Listing }) {
   const baseData = {
     '@context': 'https://schema.org',
-    name: activity.name,
-    description: activity.description,
-    address: getAddressSchema(activity.address),
-    geo: getGeoSchema(activity.coordinates),
-    image: activity.images[0],
-    url: `https://kidfriendlyflagstaff.com/activity/${activity.slug}`,
-    ...(activity.phone && { telephone: activity.phone }),
-    ...(activity.website && { sameAs: activity.website }),
+    name: listing.name,
+    description: listing.description,
+    address: getAddressSchema(listing.address),
+    geo: getGeoSchema(listing.coordinates),
+    image: listing.images[0],
+    url: `https://kidfriendlyflagstaff.com/listing/${listing.slug}`,
+    ...(listing.phone && { telephone: listing.phone }),
+    ...(listing.website && { sameAs: listing.website }),
   }
 
   // Restaurant schema for eat category
-  if (isEatActivity(activity)) {
+  if (isEatListing(listing)) {
     const data = {
       ...baseData,
       '@type': 'Restaurant',
-      servesCuisine: activity.cuisine,
-      priceRange: activity.priceRange || '$$',
-      ...(activity.hours && { openingHours: activity.hours }),
-      acceptsReservations: activity.features.includes('reservations'),
-      menu: activity.website,
+      servesCuisine: listing.cuisine,
+      priceRange: listing.priceRange || '$$',
+      ...(listing.hours && { openingHours: listing.hours }),
+      acceptsReservations: listing.features.includes('reservations'),
+      menu: listing.website,
     }
     return <JsonLd data={data} />
   }
 
   // Park schema for play category
-  if (isPlayActivity(activity)) {
+  if (isPlayListing(listing)) {
     const data = {
       ...baseData,
-      '@type': activity.playType === 'playground' ? 'Playground' : 'LocalBusiness',
-      ...(activity.hours && { openingHours: activity.hours }),
+      '@type': listing.playType === 'playground' ? 'Playground' : 'LocalBusiness',
+      ...(listing.hours && { openingHours: listing.hours }),
       publicAccess: true,
     }
     return <JsonLd data={data} />
   }
 
   // Place schema for hike category
-  if (isHikeActivity(activity)) {
+  if (isHikeListing(listing)) {
     const data = {
       ...baseData,
       '@type': 'Place',
@@ -128,19 +128,19 @@ export function ActivityJsonLd({ activity }: { activity: Activity }) {
         {
           '@type': 'PropertyValue',
           name: 'Distance',
-          value: activity.distance,
+          value: listing.distance,
         },
         {
           '@type': 'PropertyValue',
           name: 'Difficulty',
-          value: activity.difficulty,
+          value: listing.difficulty,
         },
-        ...(activity.elevationGain
+        ...(listing.elevationGain
           ? [
               {
                 '@type': 'PropertyValue',
                 name: 'Elevation Gain',
-                value: activity.elevationGain,
+                value: listing.elevationGain,
               },
             ]
           : []),
@@ -150,24 +150,24 @@ export function ActivityJsonLd({ activity }: { activity: Activity }) {
   }
 
   // TouristAttraction schema for learn category
-  if (isLearnActivity(activity)) {
+  if (isLearnListing(listing)) {
     const data = {
       ...baseData,
       '@type': 'TouristAttraction',
       touristType: 'Family',
-      ...(activity.hours && { openingHours: activity.hours }),
-      isAccessibleForFree: !activity.admissionRequired,
+      ...(listing.hours && { openingHours: listing.hours }),
+      isAccessibleForFree: !listing.admissionRequired,
     }
     return <JsonLd data={data} />
   }
 
   // LocalBusiness schema for shop category
-  if (isShopActivity(activity)) {
+  if (isShopListing(listing)) {
     const data = {
       ...baseData,
       '@type': 'Store',
-      priceRange: activity.priceRange || '$$',
-      ...(activity.hours && { openingHours: activity.hours }),
+      priceRange: listing.priceRange || '$$',
+      ...(listing.hours && { openingHours: listing.hours }),
     }
     return <JsonLd data={data} />
   }

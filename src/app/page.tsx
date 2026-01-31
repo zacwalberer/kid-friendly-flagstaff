@@ -1,16 +1,16 @@
-import { Hero, CategoryCards, FeaturedActivities } from '@/components/home'
+import { Hero, CategoryCards, FeaturedListings } from '@/components/home'
 import { NewsletterSignup } from '@/components/newsletter'
-import { getFeaturedActivities, getAllActivities } from '@/lib/data'
+import { getFeaturedListings, getAllListings } from '@/lib/data'
 import type { Category } from '@/types'
 
 export default async function HomePage() {
-  const featuredActivities = await getFeaturedActivities(6)
-  const allActivities = await getAllActivities()
+  const featuredListings = await getFeaturedListings(6)
+  const allListings = await getAllListings()
 
-  // Count activities per category
-  const activityCounts = allActivities.reduce(
-    (acc, activity) => {
-      acc[activity.category] = (acc[activity.category] || 0) + 1
+  // Count listings per category
+  const listingCounts = allListings.reduce(
+    (acc, listing) => {
+      acc[listing.category] = (acc[listing.category] || 0) + 1
       return acc
     },
     {} as Record<Category, number>
@@ -19,8 +19,8 @@ export default async function HomePage() {
   return (
     <div>
       <Hero />
-      <CategoryCards activityCounts={activityCounts} />
-      <FeaturedActivities activities={featuredActivities} />
+      <CategoryCards listingCounts={listingCounts} />
+      <FeaturedListings listings={featuredListings} />
       <NewsletterSignup />
     </div>
   )

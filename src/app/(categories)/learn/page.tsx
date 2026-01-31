@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { CategoryPageClient } from '@/components/CategoryPageClient'
-import { getLearnActivities, getCategoryBySlug, getTopPickForCategory } from '@/lib/data'
+import { getLearnListings, getCategoryBySlug, getTopPickForCategory } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'Learn',
@@ -17,14 +17,14 @@ export const metadata: Metadata = {
 }
 
 export default async function LearnPage() {
-  const activities = await getLearnActivities()
+  const listings = await getLearnListings()
   const category = getCategoryBySlug('learn')!
   const topPick = await getTopPickForCategory('learn')
 
   return (
     <CategoryPageClient
       category={category}
-      activities={activities}
+      listings={listings}
       topPick={topPick}
     />
   )

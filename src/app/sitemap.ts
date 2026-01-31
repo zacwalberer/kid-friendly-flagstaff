@@ -1,10 +1,10 @@
 import { MetadataRoute } from 'next'
-import { getAllActivities, getCategories } from '@/lib/data'
+import { getAllListings, getCategories } from '@/lib/data'
 
 const BASE_URL = 'https://kidfriendlyflagstaff.com'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const activities = await getAllActivities()
+  const listings = await getAllListings()
   const categories = getCategories()
 
   // Static pages
@@ -25,13 +25,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }))
 
-  // Activity pages
-  const activityPages: MetadataRoute.Sitemap = activities.map((activity) => ({
-    url: `${BASE_URL}/activity/${activity.slug}`,
-    lastModified: new Date(activity.lastUpdated),
+  // Listing pages
+  const listingPages: MetadataRoute.Sitemap = listings.map((listing) => ({
+    url: `${BASE_URL}/listing/${listing.slug}`,
+    lastModified: new Date(listing.lastUpdated),
     changeFrequency: 'monthly',
     priority: 0.6,
   }))
 
-  return [...staticPages, ...categoryPages, ...activityPages]
+  return [...staticPages, ...categoryPages, ...listingPages]
 }

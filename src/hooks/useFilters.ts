@@ -10,7 +10,7 @@ import type {
   ShopFilterState,
   FilterAction,
 } from '@/types/filters'
-import type { Category } from '@/types/activity'
+import type { Category } from '@/types/listing'
 
 // Initial states for each category
 export const initialBaseFilterState: BaseFilterState = {

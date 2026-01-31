@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import { CategoryPageClient } from '@/components/CategoryPageClient'
-import { getShopActivities, getCategoryBySlug, getTopPickForCategory } from '@/lib/data'
+import { getShopListings, getCategoryBySlug, getTopPickForCategory } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'Shop',
@@ -17,14 +17,14 @@ export const metadata: Metadata = {
 }
 
 export default async function ShopPage() {
-  const activities = await getShopActivities()
+  const listings = await getShopListings()
   const category = getCategoryBySlug('shop')!
   const topPick = await getTopPickForCategory('shop')
 
   return (
     <CategoryPageClient
       category={category}
-      activities={activities}
+      listings={listings}
       topPick={topPick}
     />
   )

@@ -44,11 +44,11 @@ import {
 } from '@/utils/constants'
 import { formatDistance, formatElevation, formatDuration } from '@/utils/formatDistance'
 import { slideUp, fadeIn, staggerContainer, staggerItem } from '@/lib/animations'
-import type { Activity } from '@/types'
-import * as ActivityTypes from '@/types/activity'
+import type { Listing } from '@/types'
+import * as ListingTypes from '@/types/listing'
 
-interface ActivityDetailProps {
-  activity: Activity
+interface ListingDetailProps {
+  listing: Listing
 }
 
 const CATEGORY_ICONS: Record<string, LucideIcon> = {
@@ -73,12 +73,12 @@ const DIFFICULTY_FOREST_COLORS: Record<string, string> = {
   hard: 'bg-[var(--bark-400)] text-white',
 }
 
-export function ActivityDetail({ activity }: ActivityDetailProps) {
-  const categoryInfo = getCategoryInfo(activity.category)
-  const Icon = CATEGORY_ICONS[activity.category]
+export function ListingDetail({ listing }: ListingDetailProps) {
+  const categoryInfo = getCategoryInfo(listing.category)
+  const Icon = CATEGORY_ICONS[listing.category]
 
   const openInMaps = () => {
-    const query = encodeURIComponent(activity.address)
+    const query = encodeURIComponent(listing.address)
     window.open(`https://maps.google.com?q=${query}`, '_blank')
   }
 
@@ -91,7 +91,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
     >
       {/* Back link */}
       <motion.div variants={slideUp} className="mb-6">
-        <Link href={`/${activity.category}`}>
+        <Link href={`/${listing.category}`}>
           <Button variant="ghost" size="sm" className="text-[var(--forest-600)] hover:text-[var(--forest-800)] hover:bg-[var(--forest-100)]">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to {categoryInfo.name}
@@ -108,7 +108,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                 {Icon && <Icon className="h-3 w-3" />}
                 {categoryInfo.name}
               </Badge>
-              {activity.isTopPick && (
+              {listing.isTopPick && (
                 <Badge className="top-pick-badge">
                   <Star className="h-3 w-3 mr-1 fill-current" />
                   Top Pick
@@ -116,15 +116,15 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
               )}
             </div>
             <h1 className="text-3xl md:text-4xl font-display font-bold mb-2 text-[var(--forest-800)]">
-              {activity.name}
+              {listing.name}
             </h1>
             <KidFriendlinessScore
-              score={activity.kidFriendlinessScore}
+              score={listing.kidFriendlinessScore}
               size="lg"
               showLabel
             />
           </div>
-          <ShareButtons title={activity.name} />
+          <ShareButtons title={listing.name} />
         </div>
       </motion.div>
 
@@ -133,16 +133,16 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
         variants={slideUp}
         className="relative aspect-video rounded-xl overflow-hidden mb-8 bg-[var(--cream-200)] shadow-forest-lg"
       >
-        {activity.images[0] ? (
+        {listing.images[0] ? (
           <Image
-            src={activity.images[0]}
-            alt={activity.name}
+            src={listing.images[0]}
+            alt={listing.name}
             fill
             className="object-cover"
             priority
           />
         ) : (
-          <div className={`absolute inset-0 flex items-center justify-center ${CATEGORY_GRADIENTS[activity.category]}`}>
+          <div className={`absolute inset-0 flex items-center justify-center ${CATEGORY_GRADIENTS[listing.category]}`}>
             {Icon && <Icon className="h-20 w-20 text-white/80" strokeWidth={1.5} />}
           </div>
         )}
@@ -159,14 +159,14 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
               </CardHeader>
               <CardContent>
                 <p className="text-[var(--forest-600)] leading-relaxed">
-                  {activity.description}
+                  {listing.description}
                 </p>
               </CardContent>
             </Card>
           </motion.div>
 
           {/* Category-specific details */}
-          {ActivityTypes.isHikeActivity(activity) && (
+          {ListingTypes.isHikeListing(listing) && (
             <motion.div variants={staggerItem}>
               <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
                 <CardHeader>
@@ -179,50 +179,50 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm text-[var(--forest-500)]">Distance</p>
-                      <p className="font-display font-medium text-[var(--forest-800)]">{formatDistance(activity.distance)}</p>
+                      <p className="font-display font-medium text-[var(--forest-800)]">{formatDistance(listing.distance)}</p>
                     </div>
                     <div>
                       <p className="text-sm text-[var(--forest-500)]">Difficulty</p>
-                      <Badge className={DIFFICULTY_FOREST_COLORS[activity.difficulty]}>
-                        {DIFFICULTY_LABELS[activity.difficulty]}
+                      <Badge className={DIFFICULTY_FOREST_COLORS[listing.difficulty]}>
+                        {DIFFICULTY_LABELS[listing.difficulty]}
                       </Badge>
                     </div>
-                    {activity.elevationGain && (
+                    {listing.elevationGain && (
                       <div>
                         <p className="text-sm text-[var(--forest-500)]">Elevation Gain</p>
                         <p className="font-display font-medium text-[var(--forest-800)]">
-                          {formatElevation(activity.elevationGain)}
+                          {formatElevation(listing.elevationGain)}
                         </p>
                       </div>
                     )}
                     <div>
                       <p className="text-sm text-[var(--forest-500)]">Surface</p>
-                      <p className="font-display font-medium text-[var(--forest-800)]">{SURFACE_LABELS[activity.surface]}</p>
+                      <p className="font-display font-medium text-[var(--forest-800)]">{SURFACE_LABELS[listing.surface]}</p>
                     </div>
                   </div>
                   <Separator className="bg-[var(--cream-300)]" />
                   <div className="flex flex-wrap gap-4">
                     <Badge variant="secondary" className="bg-[var(--cream-200)] text-[var(--forest-600)]">
-                      {HIKE_TYPE_LABELS[activity.hikeType]}
+                      {HIKE_TYPE_LABELS[listing.hikeType]}
                     </Badge>
-                    {activity.shadeCoverage && (
+                    {listing.shadeCoverage && (
                       <Badge variant="secondary" className="bg-[var(--cream-200)] text-[var(--forest-600)]">
-                        {SHADE_COVERAGE_LABELS[activity.shadeCoverage]}
+                        {SHADE_COVERAGE_LABELS[listing.shadeCoverage]}
                       </Badge>
                     )}
-                    {activity.duration && (
+                    {listing.duration && (
                       <Badge variant="secondary" className="bg-[var(--cream-200)] text-[var(--forest-600)]">
-                        {formatDuration(activity.duration)}
+                        {formatDuration(listing.duration)}
                       </Badge>
                     )}
                   </div>
-                  {activity.features && activity.features.length > 0 && (
+                  {listing.features && listing.features.length > 0 && (
                     <>
                       <Separator className="bg-[var(--cream-300)]" />
                       <div>
                         <p className="text-sm text-[var(--forest-500)] mb-2">Features</p>
                         <div className="flex flex-wrap gap-2">
-                          {activity.features.map((feature) => (
+                          {listing.features.map((feature) => (
                             <Badge key={feature} variant="outline" className="border-[var(--cream-300)] text-[var(--forest-600)]">
                               {feature}
                             </Badge>
@@ -236,7 +236,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
             </motion.div>
           )}
 
-          {ActivityTypes.isEatActivity(activity) && (
+          {ListingTypes.isEatListing(listing) && (
             <motion.div variants={staggerItem}>
               <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
                 <CardHeader>
@@ -248,12 +248,12 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                 <CardContent className="space-y-4">
                   <div>
                     <p className="text-sm text-[var(--forest-500)] mb-2">Cuisine</p>
-                    <p className="font-display font-medium text-[var(--forest-800)]">{activity.cuisine}</p>
+                    <p className="font-display font-medium text-[var(--forest-800)]">{listing.cuisine}</p>
                   </div>
                   <div>
                     <p className="text-sm text-[var(--forest-500)] mb-2">Meal Types</p>
                     <div className="flex flex-wrap gap-2">
-                      {activity.mealTypes.map((meal) => (
+                      {listing.mealTypes.map((meal) => (
                         <Badge key={meal} variant="secondary" className="bg-[var(--forest-100)] text-[var(--forest-700)]">
                           {MEAL_TYPE_LABELS[meal]}
                         </Badge>
@@ -263,7 +263,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                   <div>
                     <p className="text-sm text-[var(--forest-500)] mb-2">Features</p>
                     <div className="flex flex-wrap gap-2">
-                      {activity.features.map((feature) => (
+                      {listing.features.map((feature) => (
                         <Badge key={feature} variant="outline" className="border-[var(--cream-300)] text-[var(--forest-600)]">
                           {EAT_FEATURE_LABELS[feature]}
                         </Badge>
@@ -275,7 +275,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
             </motion.div>
           )}
 
-          {ActivityTypes.isLearnActivity(activity) && (
+          {ListingTypes.isLearnListing(listing) && (
             <motion.div variants={staggerItem}>
               <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
                 <CardHeader>
@@ -288,27 +288,27 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm text-[var(--forest-500)]">Setting</p>
-                      <p className="font-display font-medium text-[var(--forest-800)]">{SETTING_LABELS[activity.setting]}</p>
+                      <p className="font-display font-medium text-[var(--forest-800)]">{SETTING_LABELS[listing.setting]}</p>
                     </div>
                     <div>
                       <p className="text-sm text-[var(--forest-500)]">Admission</p>
                       <p className="font-display font-medium text-[var(--forest-800)]">
-                        {activity.admissionRequired ? 'Required' : 'Free'}
+                        {listing.admissionRequired ? 'Required' : 'Free'}
                       </p>
                     </div>
                   </div>
-                  {activity.advanceBooking && (
+                  {listing.advanceBooking && (
                     <Badge variant="outline" className="border-[var(--aspen-400)] text-[var(--forest-700)] bg-[var(--aspen-300)]/30">
                       Advance Booking Recommended
                     </Badge>
                   )}
-                  {activity.features && activity.features.length > 0 && (
+                  {listing.features && listing.features.length > 0 && (
                     <>
                       <Separator className="bg-[var(--cream-300)]" />
                       <div>
                         <p className="text-sm text-[var(--forest-500)] mb-2">Features</p>
                         <div className="flex flex-wrap gap-2">
-                          {activity.features.map((feature) => (
+                          {listing.features.map((feature) => (
                             <Badge key={feature} variant="outline" className="border-[var(--cream-300)] text-[var(--forest-600)]">
                               {feature}
                             </Badge>
@@ -322,7 +322,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
             </motion.div>
           )}
 
-          {ActivityTypes.isPlayActivity(activity) && (
+          {ListingTypes.isPlayListing(listing) && (
             <motion.div variants={staggerItem}>
               <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
                 <CardHeader>
@@ -335,24 +335,24 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm text-[var(--forest-500)]">Setting</p>
-                      <p className="font-display font-medium text-[var(--forest-800)]">{SETTING_LABELS[activity.setting]}</p>
+                      <p className="font-display font-medium text-[var(--forest-800)]">{SETTING_LABELS[listing.setting]}</p>
                     </div>
-                    {activity.hasFencedArea !== undefined && (
+                    {listing.hasFencedArea !== undefined && (
                       <div>
                         <p className="text-sm text-[var(--forest-500)]">Fenced Area</p>
                         <p className="font-display font-medium text-[var(--forest-800)]">
-                          {activity.hasFencedArea ? 'Yes' : 'No'}
+                          {listing.hasFencedArea ? 'Yes' : 'No'}
                         </p>
                       </div>
                     )}
                   </div>
-                  {activity.features && activity.features.length > 0 && (
+                  {listing.features && listing.features.length > 0 && (
                     <>
                       <Separator className="bg-[var(--cream-300)]" />
                       <div>
                         <p className="text-sm text-[var(--forest-500)] mb-2">Features</p>
                         <div className="flex flex-wrap gap-2">
-                          {activity.features.map((feature) => (
+                          {listing.features.map((feature) => (
                             <Badge key={feature} variant="outline" className="border-[var(--cream-300)] text-[var(--forest-600)]">
                               {feature}
                             </Badge>
@@ -366,7 +366,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
             </motion.div>
           )}
 
-          {ActivityTypes.isShopActivity(activity) && activity.features && activity.features.length > 0 && (
+          {ListingTypes.isShopListing(listing) && listing.features && listing.features.length > 0 && (
             <motion.div variants={staggerItem}>
               <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
                 <CardHeader>
@@ -379,7 +379,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                   <div>
                     <p className="text-sm text-[var(--forest-500)] mb-2">Features</p>
                     <div className="flex flex-wrap gap-2">
-                      {activity.features.map((feature) => (
+                      {listing.features.map((feature) => (
                         <Badge key={feature} variant="outline" className="border-[var(--cream-300)] text-[var(--forest-600)]">
                           {feature}
                         </Badge>
@@ -392,7 +392,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
           )}
 
           {/* Tips */}
-          {activity.tips && activity.tips.length > 0 && (
+          {listing.tips && listing.tips.length > 0 && (
             <motion.div variants={staggerItem}>
               <Card className="border-[var(--aspen-300)] bg-gradient-to-br from-[var(--aspen-300)]/20 to-[var(--cream-100)]">
                 <CardHeader>
@@ -405,7 +405,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
-                    {activity.tips.map((tip, index) => (
+                    {listing.tips.map((tip, index) => (
                       <li key={index} className="flex items-start gap-2">
                         <span className="text-[var(--aspen-500)] mt-1">•</span>
                         <span className="text-[var(--forest-600)]">{tip}</span>
@@ -431,7 +431,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                 <div className="flex items-start gap-3">
                   <MapPin className="h-5 w-5 text-[var(--forest-500)] mt-0.5" />
                   <div>
-                    <p className="font-medium text-[var(--forest-800)]">{activity.address}</p>
+                    <p className="font-medium text-[var(--forest-800)]">{listing.address}</p>
                     <Button
                       variant="link"
                       size="sm"
@@ -445,51 +445,51 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                 </div>
 
                 {/* Hours */}
-                {activity.hours && (
+                {listing.hours && (
                   <div className="flex items-start gap-3">
                     <Clock className="h-5 w-5 text-[var(--forest-500)] mt-0.5" />
                     <div>
                       <p className="text-sm text-[var(--forest-500)]">Hours</p>
-                      <p className="font-medium text-[var(--forest-800)]">{activity.hours}</p>
+                      <p className="font-medium text-[var(--forest-800)]">{listing.hours}</p>
                     </div>
                   </div>
                 )}
 
                 {/* Price */}
-                {activity.priceRange && (
+                {listing.priceRange && (
                   <div className="flex items-start gap-3">
                     <DollarSign className="h-5 w-5 text-[var(--forest-500)] mt-0.5" />
                     <div>
                       <p className="text-sm text-[var(--forest-500)]">Price Range</p>
-                      <p className="font-medium text-[var(--forest-800)]">{activity.priceRange}</p>
+                      <p className="font-medium text-[var(--forest-800)]">{listing.priceRange}</p>
                     </div>
                   </div>
                 )}
 
                 {/* Phone */}
-                {activity.phone && (
+                {listing.phone && (
                   <div className="flex items-start gap-3">
                     <Phone className="h-5 w-5 text-[var(--forest-500)] mt-0.5" />
                     <div>
                       <p className="text-sm text-[var(--forest-500)]">Phone</p>
                       <a
-                        href={`tel:${activity.phone}`}
+                        href={`tel:${listing.phone}`}
                         className="font-medium text-[var(--forest-800)] hover:text-[var(--forest-600)] hover:underline"
                       >
-                        {activity.phone}
+                        {listing.phone}
                       </a>
                     </div>
                   </div>
                 )}
 
                 {/* Website */}
-                {activity.website && (
+                {listing.website && (
                   <div className="flex items-start gap-3">
                     <Globe className="h-5 w-5 text-[var(--forest-500)] mt-0.5" />
                     <div>
                       <p className="text-sm text-[var(--forest-500)]">Website</p>
                       <a
-                        href={activity.website}
+                        href={listing.website}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="font-medium text-[var(--forest-800)] hover:text-[var(--forest-600)] hover:underline break-all"
@@ -511,7 +511,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
-                  {activity.ageRanges.map((age) => (
+                  {listing.ageRanges.map((age) => (
                     <Badge key={age} variant="secondary" className="bg-[var(--forest-100)] text-[var(--forest-700)]">
                       {AGE_DISPLAY_NAMES[age]}
                     </Badge>
@@ -529,7 +529,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-3">
-                  {activity.weather.map((w) => (
+                  {listing.weather.map((w) => (
                     <div key={w} className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-[var(--cream-200)]">
                       <span className="text-lg">{WEATHER_ICONS[w]}</span>
                       <span className="text-sm text-[var(--forest-700)]">{WEATHER_LABELS[w]}</span>
@@ -547,13 +547,13 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                 <CardTitle className="font-display text-[var(--forest-800)]">Amenities</CardTitle>
               </CardHeader>
               <CardContent>
-                <AmenityIcons amenities={activity.amenities} showLabels />
+                <AmenityIcons amenities={listing.amenities} showLabels />
               </CardContent>
             </Card>
           </motion.div>
 
           {/* Accessibility */}
-          {activity.accessibility && activity.accessibility.length > 0 && (
+          {listing.accessibility && listing.accessibility.length > 0 && (
             <motion.div variants={staggerItem}>
               <Card className="border-[var(--cream-300)] bg-[var(--cream-100)]">
                 <CardHeader>
@@ -561,7 +561,7 @@ export function ActivityDetail({ activity }: ActivityDetailProps) {
                 </CardHeader>
                 <CardContent>
                   <div className="flex flex-wrap gap-2">
-                    {activity.accessibility.map((a) => (
+                    {listing.accessibility.map((a) => (
                       <div key={a} className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-[var(--forest-100)]">
                         <span className="text-lg">{ACCESSIBILITY_ICONS[a]}</span>
                         <span className="text-sm text-[var(--forest-700)]">{ACCESSIBILITY_LABELS[a]}</span>

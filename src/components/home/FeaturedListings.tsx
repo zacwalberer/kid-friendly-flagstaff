@@ -2,16 +2,16 @@
 
 import { motion } from 'framer-motion'
 import { Star, Sparkles } from 'lucide-react'
-import { ActivityGrid } from '@/components/activity/ActivityGrid'
+import { ListingGrid } from '@/components/listing/ListingGrid'
 import { fadeIn, slideUp } from '@/lib/animations'
-import type { Activity } from '@/types'
+import type { Listing } from '@/types'
 
-interface FeaturedActivitiesProps {
-  activities: Activity[]
+interface FeaturedListingsProps {
+  listings: Listing[]
 }
 
-export function FeaturedActivities({ activities }: FeaturedActivitiesProps) {
-  if (activities.length === 0) return null
+export function FeaturedListings({ listings }: FeaturedListingsProps) {
+  if (listings.length === 0) return null
 
   return (
     <section className="py-12 bg-[var(--cream-100)]">
@@ -31,7 +31,7 @@ export function FeaturedActivities({ activities }: FeaturedActivitiesProps) {
             </div>
             <div>
               <h2 className="text-2xl md:text-3xl font-display font-bold text-[var(--forest-800)]">
-                Featured Activities
+                Featured Listings
               </h2>
               <p className="text-sm text-[var(--forest-600)] flex items-center gap-1">
                 <Sparkles className="h-3 w-3 text-[var(--aspen-400)]" />
@@ -40,9 +40,9 @@ export function FeaturedActivities({ activities }: FeaturedActivitiesProps) {
             </div>
           </motion.div>
 
-          <ActivityGrid
-            activities={activities}
-            emptyMessage="No featured activities yet."
+          <ListingGrid
+            listings={listings}
+            emptyMessage="No featured listings yet."
           />
         </motion.div>
       </div>

@@ -1,2 +1,2 @@
-export * from './activity'
+export * from './listing'
 export * from './filters'

@@ -16,7 +16,7 @@ export type PriceRange = 'free' | '$' | '$$' | '$$$'
 
 export type Difficulty = 'easy' | 'moderate' | 'hard'
 
-export type Surface = 'paved' | 'gravel' | 'dirt' | 'mixed'
+export type Surface = 'paved' | 'gravel' | 'rocky' | 'mixed'
 
 export type HikeType = 'loop' | 'out-and-back'
 
@@ -94,8 +94,8 @@ export type ShopFeature =
   | 'souvenirs'
   | 'outdoor-gear'
 
-// Base activity interface
-export interface BaseActivity {
+// Base listing interface
+export interface BaseListing {
   id: string
   slug: string
   name: string
@@ -106,7 +106,7 @@ export interface BaseActivity {
   phone?: string
   website?: string
   hours?: string
-  priceRange?: PriceRange[]
+  priceRange?: PriceRange
   kidFriendlinessScore: 1 | 2 | 3 | 4 | 5
   ageRanges: AgeRange[]
   weather: Weather[]
@@ -123,8 +123,8 @@ export interface BaseActivity {
   lastUpdated: string
 }
 
-// Category-specific activity interfaces
-export interface PlayActivity extends BaseActivity {
+// Category-specific listing interfaces
+export interface PlayListing extends BaseListing {
   category: 'play'
   playType: PlayType
   setting: Setting
@@ -135,7 +135,7 @@ export interface PlayActivity extends BaseActivity {
   features?: PlayFeature[]
 }
 
-export interface HikeActivity extends BaseActivity {
+export interface HikeListing extends BaseListing {
   category: 'hike'
   difficulty: Difficulty
   distance: string
@@ -151,7 +151,7 @@ export interface HikeActivity extends BaseActivity {
   hasPicnicTable?: boolean
 }
 
-export interface EatActivity extends BaseActivity {
+export interface EatListing extends BaseListing {
   category: 'eat'
   cuisine: string
   mealTypes: MealType[]
@@ -159,7 +159,7 @@ export interface EatActivity extends BaseActivity {
   noiseLevel?: 'quiet' | 'moderate' | 'loud'
 }
 
-export interface LearnActivity extends BaseActivity {
+export interface LearnListing extends BaseListing {
   category: 'learn'
   learnType: LearnType
   setting: Setting
@@ -168,39 +168,39 @@ export interface LearnActivity extends BaseActivity {
   features?: LearnFeature[]
 }
 
-export interface ShopActivity extends BaseActivity {
+export interface ShopListing extends BaseListing {
   category: 'shop'
   shopType: ShopType
   features?: ShopFeature[]
 }
 
-// Union type for all activities
-export type Activity =
-  | PlayActivity
-  | HikeActivity
-  | EatActivity
-  | LearnActivity
-  | ShopActivity
+// Union type for all listings
+export type Listing =
+  | PlayListing
+  | HikeListing
+  | EatListing
+  | LearnListing
+  | ShopListing
 
 // Type guards
-export function isPlayActivity(activity: Activity): activity is PlayActivity {
-  return activity.category === 'play'
+export function isPlayListing(listing: Listing): listing is PlayListing {
+  return listing.category === 'play'
 }
 
-export function isHikeActivity(activity: Activity): activity is HikeActivity {
-  return activity.category === 'hike'
+export function isHikeListing(listing: Listing): listing is HikeListing {
+  return listing.category === 'hike'
 }
 
-export function isEatActivity(activity: Activity): activity is EatActivity {
-  return activity.category === 'eat'
+export function isEatListing(listing: Listing): listing is EatListing {
+  return listing.category === 'eat'
 }
 
-export function isLearnActivity(activity: Activity): activity is LearnActivity {
-  return activity.category === 'learn'
+export function isLearnListing(listing: Listing): listing is LearnListing {
+  return listing.category === 'learn'
 }
 
-export function isShopActivity(activity: Activity): activity is ShopActivity {
-  return activity.category === 'shop'
+export function isShopListing(listing: Listing): listing is ShopListing {
+  return listing.category === 'shop'
 }
 
 // Category metadata

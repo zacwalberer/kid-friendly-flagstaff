@@ -13,7 +13,7 @@ import type {
   PlayFeature,
   LearnFeature,
   ShopFeature,
-} from './activity'
+} from './listing'
 
 export interface BaseFilterState {
   ageRanges: AgeRange[]

@@ -24,10 +24,10 @@ const CATEGORY_GRADIENTS: Record<string, string> = {
 }
 
 interface CategoryCardsProps {
-  activityCounts?: Record<string, number>
+  listingCounts?: Record<string, number>
 }
 
-export function CategoryCards({ activityCounts = {} }: CategoryCardsProps) {
+export function CategoryCards({ listingCounts = {} }: CategoryCardsProps) {
   return (
     <section className="py-12 bg-[var(--cream-200)]/50">
       <div className="container mx-auto px-4">
@@ -58,9 +58,9 @@ export function CategoryCards({ activityCounts = {} }: CategoryCardsProps) {
                         <p className="text-xs text-[var(--forest-600)] line-clamp-2">
                           {category.description}
                         </p>
-                        {activityCounts[category.id] !== undefined && (
+                        {listingCounts[category.id] !== undefined && (
                           <p className="text-xs text-[var(--forest-500)] mt-2 font-medium">
-                            {activityCounts[category.id]} activities
+                            {listingCounts[category.id]} listings
                           </p>
                         )}
                       </div>

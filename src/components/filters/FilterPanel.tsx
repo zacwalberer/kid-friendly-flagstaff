@@ -22,7 +22,7 @@ import { AccessibilityFilter } from './AccessibilityFilter'
 import { HikeFilters } from './HikeFilters'
 import { EatFilters } from './EatFilters'
 import { filterPanelVariants } from '@/lib/animations'
-import { countActiveFilters } from '@/utils/filterActivities'
+import { countActiveFilters } from '@/utils/filterListings'
 import { cn } from '@/lib/utils'
 import { SETTING_LABELS, ALL_SETTINGS } from '@/utils/constants'
 import type { Category, AgeRange, Weather, Amenity, Difficulty, Surface, MealType, EatFeature, Accessibility, Setting, ShadeCoverage, HikeType } from '@/types'
@@ -143,7 +143,7 @@ export function FilterPanel({
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--forest-400)]" />
           <Input
             type="text"
-            placeholder="Search activities..."
+            placeholder="Search listings..."
             value={filters.searchQuery}
             onChange={(e) => handleSearchChange(e.target.value)}
             className="pl-9 border-[var(--cream-300)] bg-[var(--cream-50)] focus:border-[var(--forest-400)] focus:ring-[var(--forest-400)]"

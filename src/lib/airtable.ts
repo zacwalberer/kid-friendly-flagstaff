@@ -1,11 +1,11 @@
 import Airtable from 'airtable'
 import type {
-  Activity,
-  PlayActivity,
-  HikeActivity,
-  EatActivity,
-  LearnActivity,
-  ShopActivity,
+  Listing,
+  PlayListing,
+  HikeListing,
+  EatListing,
+  LearnListing,
+  ShopListing,
   Category,
   AgeRange,
   Weather,
@@ -30,7 +30,7 @@ import type {
 
 // Airtable field names mapping to our schema
 // These should match exactly what's in your Airtable base
-interface AirtableActivityRecord {
+interface AirtableListingRecord {
   // Base fields
   id?: string
   slug?: string
@@ -42,7 +42,7 @@ interface AirtableActivityRecord {
   phone?: string
   website?: string
   hours?: string
-  priceRange?: PriceRange[]
+  priceRange?: PriceRange
   kidFriendlinessScore?: number
   ageRanges?: AgeRange[]
   weather?: Weather[]
@@ -118,11 +118,11 @@ function parseStringToArray(value: string | undefined): string[] {
     .filter(Boolean)
 }
 
-// Transform Airtable record to our Activity type
+// Transform Airtable record to our Listing type
 function transformRecord(
   recordId: string,
-  fields: AirtableActivityRecord
-): Activity | null {
+  fields: AirtableListingRecord
+): Listing | null {
   // Skip unpublished records
   if (fields.status && fields.status !== 'Published') {
     return null
@@ -134,8 +134,8 @@ function transformRecord(
     return null
   }
 
-  // Build base activity object
-  const baseActivity = {
+  // Build base listing object
+  const baseListing = {
     id: fields.id || `${fields.category}-${fields.slug}`,
     slug: fields.slug,
     name: fields.name,
@@ -163,11 +163,11 @@ function transformRecord(
     lastUpdated: fields.lastUpdated || new Date().toISOString().split('T')[0],
   }
 
-  // Build category-specific activity
+  // Build category-specific listing
   switch (fields.category) {
     case 'play':
       return {
-        ...baseActivity,
+        ...baseListing,
         category: 'play',
         playType: fields.playType || 'playground',
         setting: fields.setting || 'outdoor',
@@ -176,11 +176,11 @@ function transformRecord(
         hasWaterFountain: fields.hasWaterFountain,
         hasPicnicTable: fields.hasPicnicTable,
         features: fields.playFeatures,
-      } as PlayActivity
+      } as PlayListing
 
     case 'hike':
       return {
-        ...baseActivity,
+        ...baseListing,
         category: 'hike',
         difficulty: fields.difficulty || 'easy',
         distance: fields.distance || '',
@@ -194,36 +194,36 @@ function transformRecord(
         duration: fields.duration,
         hasWaterFountain: fields.hasWaterFountain,
         hasPicnicTable: fields.hasPicnicTable,
-      } as HikeActivity
+      } as HikeListing
 
     case 'eat':
       return {
-        ...baseActivity,
+        ...baseListing,
         category: 'eat',
         cuisine: fields.cuisine || '',
         mealTypes: fields.mealTypes || [],
         features: fields.eatFeatures || [],
         noiseLevel: fields.noiseLevel,
-      } as EatActivity
+      } as EatListing
 
     case 'learn':
       return {
-        ...baseActivity,
+        ...baseListing,
         category: 'learn',
         learnType: fields.learnType || 'attraction',
         setting: fields.setting || 'indoor',
         admissionRequired: fields.admissionRequired || false,
         advanceBooking: fields.advanceBooking,
         features: fields.learnFeatures,
-      } as LearnActivity
+      } as LearnListing
 
     case 'shop':
       return {
-        ...baseActivity,
+        ...baseListing,
         category: 'shop',
         shopType: fields.shopType || 'general',
         features: fields.shopFeatures,
-      } as ShopActivity
+      } as ShopListing
 
     default:
       console.warn(`Unknown category: ${fields.category}`)
@@ -231,12 +231,12 @@ function transformRecord(
   }
 }
 
-// Fetch all activities from Airtable
-export async function fetchActivitiesFromAirtable(): Promise<Activity[]> {
+// Fetch all listings from Airtable
+export async function fetchListingsFromAirtable(): Promise<Listing[]> {
   const base = getAirtableBase()
   const tableName = process.env.AIRTABLE_TABLE_NAME || 'Listings'
 
-  const activities: Activity[] = []
+  const listings: Listing[] = []
 
   return new Promise((resolve, reject) => {
     base(tableName)
@@ -252,12 +252,12 @@ export async function fetchActivitiesFromAirtable(): Promise<Activity[]> {
       .eachPage(
         (records, fetchNextPage) => {
           for (const record of records) {
-            const activity = transformRecord(
+            const listing = transformRecord(
               record.id,
-              record.fields as unknown as AirtableActivityRecord
+              record.fields as unknown as AirtableListingRecord
             )
-            if (activity) {
-              activities.push(activity)
+            if (listing) {
+              listings.push(listing)
             }
           }
           fetchNextPage()
@@ -267,21 +267,21 @@ export async function fetchActivitiesFromAirtable(): Promise<Activity[]> {
             console.error('Error fetching from Airtable:', err)
             reject(err)
           } else {
-            resolve(activities)
+            resolve(listings)
           }
         }
       )
   })
 }
 
-// Fetch activities by category from Airtable
-export async function fetchActivitiesByCategoryFromAirtable(
+// Fetch listings by category from Airtable
+export async function fetchListingsByCategoryFromAirtable(
   category: Category
-): Promise<Activity[]> {
+): Promise<Listing[]> {
   const base = getAirtableBase()
   const tableName = process.env.AIRTABLE_TABLE_NAME || 'Listings'
 
-  const activities: Activity[] = []
+  const listings: Listing[] = []
 
   return new Promise((resolve, reject) => {
     base(tableName)
@@ -292,12 +292,12 @@ export async function fetchActivitiesByCategoryFromAirtable(
       .eachPage(
         (records, fetchNextPage) => {
           for (const record of records) {
-            const activity = transformRecord(
+            const listing = transformRecord(
               record.id,
-              record.fields as unknown as AirtableActivityRecord
+              record.fields as unknown as AirtableListingRecord
             )
-            if (activity) {
-              activities.push(activity)
+            if (listing) {
+              listings.push(listing)
             }
           }
           fetchNextPage()
@@ -307,7 +307,7 @@ export async function fetchActivitiesByCategoryFromAirtable(
             console.error('Error fetching from Airtable:', err)
             reject(err)
           } else {
-            resolve(activities)
+            resolve(listings)
           }
         }
       )

@@ -2,17 +2,17 @@
 
 import { useState, useMemo } from 'react'
 import { CategoryHeader } from '@/components/layout'
-import { ActivityGrid, TopPick } from '@/components/activity'
+import { ListingGrid, TopPick } from '@/components/listing'
 import { FilterPanel } from '@/components/filters'
 import { PageTransition } from '@/components/shared'
 import {
-  filterActivities,
-  filterHikeActivities,
-  filterEatActivities,
-  filterPlayActivities,
-  filterLearnActivities,
-  filterShopActivities,
-} from '@/utils/filterActivities'
+  filterListings,
+  filterHikeListings,
+  filterEatListings,
+  filterPlayListings,
+  filterLearnListings,
+  filterShopListings,
+} from '@/utils/filterListings'
 import {
   initialBaseFilterState,
   initialHikeFilterState,
@@ -21,18 +21,18 @@ import {
   initialLearnFilterState,
   initialShopFilterState,
 } from '@/hooks/useFilters'
-import type { Activity, CategoryInfo, HikeActivity, EatActivity, PlayActivity, LearnActivity, ShopActivity } from '@/types'
+import type { Listing, CategoryInfo, HikeListing, EatListing, PlayListing, LearnListing, ShopListing } from '@/types'
 import type { BaseFilterState, HikeFilterState, EatFilterState, PlayFilterState, LearnFilterState, ShopFilterState } from '@/types/filters'
 
 interface CategoryPageClientProps {
   category: CategoryInfo
-  activities: Activity[]
-  topPick?: Activity
+  listings: Listing[]
+  topPick?: Listing
 }
 
 export function CategoryPageClient({
   category,
-  activities,
+  listings,
   topPick,
 }: CategoryPageClientProps) {
   // Get the appropriate initial filter state based on category
@@ -65,30 +65,30 @@ export function CategoryPageClient({
     setFilters(getInitialFilters())
   }
 
-  // Filter activities based on current filters and category
-  const filteredActivities = useMemo(() => {
+  // Filter listings based on current filters and category
+  const filteredListings = useMemo(() => {
     switch (category.id) {
       case 'hike':
-        return filterHikeActivities(activities as HikeActivity[], filters as HikeFilterState)
+        return filterHikeListings(listings as HikeListing[], filters as HikeFilterState)
       case 'eat':
-        return filterEatActivities(activities as EatActivity[], filters as EatFilterState)
+        return filterEatListings(listings as EatListing[], filters as EatFilterState)
       case 'play':
-        return filterPlayActivities(activities as PlayActivity[], filters as PlayFilterState)
+        return filterPlayListings(listings as PlayListing[], filters as PlayFilterState)
       case 'learn':
-        return filterLearnActivities(activities as LearnActivity[], filters as LearnFilterState)
+        return filterLearnListings(listings as LearnListing[], filters as LearnFilterState)
       case 'shop':
-        return filterShopActivities(activities as ShopActivity[], filters as ShopFilterState)
+        return filterShopListings(listings as ShopListing[], filters as ShopFilterState)
       default:
-        return filterActivities(activities, filters)
+        return filterListings(listings, filters)
     }
-  }, [activities, filters, category.id])
+  }, [listings, filters, category.id])
 
   return (
     <PageTransition>
       <div className="container mx-auto px-4 py-8">
-        <CategoryHeader category={category} activityCount={filteredActivities.length} />
+        <CategoryHeader category={category} listingCount={filteredListings.length} />
 
-        {topPick && <TopPick activity={topPick} />}
+        {topPick && <TopPick listing={topPick} />}
 
         <FilterPanel
           category={category.id}
@@ -97,9 +97,9 @@ export function CategoryPageClient({
           onReset={handleReset}
         />
 
-        <ActivityGrid
-          activities={filteredActivities}
-          emptyMessage={`No ${category.name.toLowerCase()} activities found matching your filters.`}
+        <ListingGrid
+          listings={filteredListings}
+          emptyMessage={`No ${category.name.toLowerCase()} listings found matching your filters.`}
         />
       </div>
     </PageTransition>

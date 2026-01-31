@@ -1,17 +1,17 @@
 import type {
-  Activity,
-  PlayActivity,
-  HikeActivity,
-  EatActivity,
-  LearnActivity,
-  ShopActivity,
+  Listing,
+  PlayListing,
+  HikeListing,
+  EatListing,
+  LearnListing,
+  ShopListing,
   Category,
   CategoryInfo,
 } from '@/types'
 
 import {
-  fetchActivitiesFromAirtable,
-  fetchActivitiesByCategoryFromAirtable,
+  fetchListingsFromAirtable,
+  fetchListingsByCategoryFromAirtable,
   isAirtableConfigured,
 } from './airtable'
 
@@ -20,78 +20,78 @@ import categoriesData from '@/../data/categories.json'
 const categories = categoriesData as CategoryInfo[]
 
 // Cache for Airtable data (populated at build time)
-let cachedActivities: Activity[] | null = null
+let cachedListings: Listing[] | null = null
 
-// Fetch all activities from Airtable
-async function fetchAllActivities(): Promise<Activity[]> {
+// Fetch all listings from Airtable
+async function fetchAllListings(): Promise<Listing[]> {
   // Return cached data if available
-  if (cachedActivities) {
-    return cachedActivities
+  if (cachedListings) {
+    return cachedListings
   }
 
   if (!isAirtableConfigured()) {
     throw new Error('Airtable is not configured. Set AIRTABLE_API_KEY and AIRTABLE_BASE_ID environment variables.')
   }
 
-  cachedActivities = await fetchActivitiesFromAirtable()
-  console.log(`Fetched ${cachedActivities.length} activities from Airtable`)
-  return cachedActivities
+  cachedListings = await fetchListingsFromAirtable()
+  console.log(`Fetched ${cachedListings.length} listings from Airtable`)
+  return cachedListings
 }
 
 // Async API functions
-export async function getPlayActivities(): Promise<PlayActivity[]> {
-  const activities = await fetchActivitiesByCategoryFromAirtable('play')
-  return activities as PlayActivity[]
+export async function getPlayListings(): Promise<PlayListing[]> {
+  const listings = await fetchListingsByCategoryFromAirtable('play')
+  return listings as PlayListing[]
 }
 
-export async function getHikeActivities(): Promise<HikeActivity[]> {
-  const activities = await fetchActivitiesByCategoryFromAirtable('hike')
-  return activities as HikeActivity[]
+export async function getHikeListings(): Promise<HikeListing[]> {
+  const listings = await fetchListingsByCategoryFromAirtable('hike')
+  return listings as HikeListing[]
 }
 
-export async function getEatActivities(): Promise<EatActivity[]> {
-  const activities = await fetchActivitiesByCategoryFromAirtable('eat')
-  return activities as EatActivity[]
+export async function getEatListings(): Promise<EatListing[]> {
+  const listings = await fetchListingsByCategoryFromAirtable('eat')
+  return listings as EatListing[]
 }
 
-export async function getLearnActivities(): Promise<LearnActivity[]> {
-  const activities = await fetchActivitiesByCategoryFromAirtable('learn')
-  return activities as LearnActivity[]
+export async function getLearnListings(): Promise<LearnListing[]> {
+  const listings = await fetchListingsByCategoryFromAirtable('learn')
+  return listings as LearnListing[]
 }
 
-export async function getShopActivities(): Promise<ShopActivity[]> {
-  const activities = await fetchActivitiesByCategoryFromAirtable('shop')
-  return activities as ShopActivity[]
+export async function getShopListings(): Promise<ShopListing[]> {
+  const listings = await fetchListingsByCategoryFromAirtable('shop')
+  return listings as ShopListing[]
 }
 
-export async function getAllActivities(): Promise<Activity[]> {
-  return fetchAllActivities()
+export async function getAllListings(): Promise<Listing[]> {
+  return fetchAllListings()
 }
 
-export async function getActivitiesByCategory(
+export async function getListingsByCategory(
   category: Category
-): Promise<Activity[]> {
+): Promise<Listing[]> {
   switch (category) {
     case 'play':
-      return getPlayActivities()
+      return getPlayListings()
     case 'hike':
-      return getHikeActivities()
+      return getHikeListings()
     case 'eat':
-      return getEatActivities()
+      return getEatListings()
     case 'learn':
-      return getLearnActivities()
+      return getLearnListings()
     case 'shop':
-      return getShopActivities()
+      return getShopListings()
     default:
       return []
   }
 }
 
-export async function getActivityBySlug(
+export async function getListingBySlug(
   slug: string
-): Promise<Activity | undefined> {
-  const activities = await getAllActivities()
-  return activities.find((activity) => activity.slug === slug)
+): Promise<Listing | undefined> {
+  const listings = await getAllListings()
+  return listings.find((listing) => listing.slug === slug)
 }
 
 export function getCategories(): CategoryInfo[] {
@@ -102,22 +102,22 @@ export function getCategoryBySlug(slug: string): CategoryInfo | undefined {
   return categories.find((category) => category.slug === slug)
 }
 
-export async function getTopPicks(): Promise<Activity[]> {
-  const activities = await getAllActivities()
-  return activities.filter((activity) => activity.isTopPick)
+export async function getTopPicks(): Promise<Listing[]> {
+  const listings = await getAllListings()
+  return listings.filter((listing) => listing.isTopPick)
 }
 
 export async function getTopPickForCategory(
   category: Category
-): Promise<Activity | undefined> {
-  const activities = await getActivitiesByCategory(category)
-  return activities.find((activity) => activity.isTopPick)
+): Promise<Listing | undefined> {
+  const listings = await getListingsByCategory(category)
+  return listings.find((listing) => listing.isTopPick)
 }
 
-export async function getFeaturedActivities(
+export async function getFeaturedListings(
   count: number = 6
-): Promise<Activity[]> {
-  const all = await getAllActivities()
+): Promise<Listing[]> {
+  const all = await getAllListings()
   // Prioritize top picks, then high scores
   const sorted = [...all].sort((a, b) => {
     if (a.isTopPick && !b.isTopPick) return -1
@@ -128,6 +128,6 @@ export async function getFeaturedActivities(
 }
 
 export async function getAllSlugs(): Promise<string[]> {
-  const activities = await getAllActivities()
-  return activities.map((activity) => activity.slug)
+  const listings = await getAllListings()
+  return listings.map((listing) => listing.slug)
 }

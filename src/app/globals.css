@@ -224,13 +224,13 @@
     box-shadow: var(--shadow-xl);
   }
 
-  /* Activity card hover effect */
-  .activity-card {
+  /* Listing card hover effect */
+  .listing-card {
     @apply transition-all duration-300 ease-out;
     box-shadow: var(--shadow-sm);
   }
 
-  .activity-card:hover {
+  .listing-card:hover {
     @apply -translate-y-1;
     box-shadow: var(--shadow-lg);
   }

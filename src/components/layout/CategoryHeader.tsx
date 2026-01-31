@@ -6,7 +6,7 @@ import type { CategoryInfo } from '@/types'
 
 interface CategoryHeaderProps {
   category: CategoryInfo
-  activityCount: number
+  listingCount: number
 }
 
 const CATEGORY_EMOJIS: Record<string, string> = {
@@ -17,7 +17,7 @@ const CATEGORY_EMOJIS: Record<string, string> = {
   shop: '🛍️',
 }
 
-export function CategoryHeader({ category, activityCount }: CategoryHeaderProps) {
+export function CategoryHeader({ category, listingCount }: CategoryHeaderProps) {
   return (
     <motion.div
       initial="hidden"
@@ -33,7 +33,7 @@ export function CategoryHeader({ category, activityCount }: CategoryHeaderProps)
         {category.description}
       </motion.p>
       <motion.p variants={slideUp} className="text-sm text-muted-foreground mt-2">
-        {activityCount} {activityCount === 1 ? 'activity' : 'activities'} found
+        {listingCount} {listingCount === 1 ? 'listing' : 'listings'} found
       </motion.p>
     </motion.div>
   )
